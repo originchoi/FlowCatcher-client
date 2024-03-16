@@ -5,11 +5,13 @@ import axios from "axios";
 
 import { signInWithPopup, signOut } from "firebase/auth";
 import { auth, provider } from "../../config/firebase";
-import { useUserStore } from "../../store/store";
+import { useHeaderStateStore, useUserStore } from "../../store/store";
 
 function Header() {
   const navigate = useNavigate();
   const { user, setUser, isLoggedIn, setIsLoggedIn } = useUserStore();
+  const { headerState } = useHeaderStateStore();
+  const isDashboard = headerState === "Dashboard";
 
   useEffect(() => {
     async function checkLogin() {
@@ -84,16 +86,24 @@ function Header() {
     }
   }
 
+  async function handleDashboard() {
+    navigate("/dashboard");
+  }
+
   return (
     <div className="flex justify-center sm:justify-between items-center w-screen shrink sticky top-0 gap-4 lg:gap-8 pt-8 px-4 py-2 z-50 bg-white mb-10">
       <Link to="/">
         <div className="flex items-center mb-5 mt-5">
           <img
-            className="w-35 ml-20 mx-auto"
+            className="w-35 ml-10 mx-auto"
             src="/assets/FlowChart_logo.png"
             alt="Logo"
           />
-          <div className="ml-10 text-2xl z-10">FlowCatcher</div>
+          {!isDashboard ? (
+            <div className="ml-15 text-2xl z-10">FlowCatcher</div>
+          ) : (
+            <div className="ml-15 text-2xl z-10">Analytics Dashboard</div>
+          )}
         </div>
       </Link>
       <div className="flex mr-4 ml-auto">
@@ -108,7 +118,7 @@ function Header() {
         </Link>
         {!isLoggedIn ? (
           <button
-            className="p-2 mr-4 items-center rounded-full hover:bg-sky-50 cursor-pointer"
+            className="p-2 mr-20 items-center rounded-full hover:bg-sky-50 cursor-pointer"
             onClick={handleLogin}
           >
             <p className="m-3 text-sm">Sign In</p>
@@ -116,7 +126,13 @@ function Header() {
         ) : (
           <>
             <button
-              className="p-2 mr-20 items-center rounded-full hover:bg-sky-50 cursor-pointer"
+              className="p-2 items-center rounded-full hover:bg-sky-50 cursor-pointer"
+              onClick={handleDashboard}
+            >
+              <p className="m-3 text-sm">Dashboard</p>
+            </button>
+            <button
+              className="p-2 mr-4 items-center rounded-full hover:bg-sky-50 cursor-pointer"
               onClick={handleLogOut}
             >
               <p className="m-3 text-sm">Sign Out</p>
