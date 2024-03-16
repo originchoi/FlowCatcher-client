@@ -41,6 +41,12 @@ module.exports = {
     "react/jsx-filename-extension": ["warn", { extensions: [".js", ".jsx"] }],
     "no-param-reassign": 0,
     "no-underscore-dangle": "off",
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        some: ["nesting", "id"],
+      },
+    ],
   },
   settings: {
     react: {
