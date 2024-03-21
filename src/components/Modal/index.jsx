@@ -5,7 +5,7 @@ function Modal({ isOpen, onClose, children }) {
     <>
       <div className="fixed inset-0 bg-black bg-opacity-50 z-40" />
       <div className="fixed inset-0 z-50 overflow-auto bg-smoke-light flex">
-        <div className="relative p-8 bg-white w-full max-w-md m-auto flex-col flex rounded-lg">
+        <div className="relative p-8 bg-white w-full max-w-lg h-auto m-auto flex-col flex rounded-lg">
           {children}
           <hr className="my-4" />
           <div className="flex justify-end">
