@@ -10,6 +10,7 @@ import DeleteConfirmationModal from "../DeleteConfirmationModal";
 
 import generateUsePageViewTrackerCode from "../../apis";
 import validateProjectName from "../../utils/validationUtils";
+import convertDateForm from "../../utils/convertDateFormUtils";
 
 function Projects() {
   const { user } = useUserStore();
@@ -100,16 +101,6 @@ function Projects() {
     setProjectToDelete(projectId);
   }
 
-  function formatDate(dateString) {
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    const date = new Date(dateString);
-    const koreanTimeZoneDate = new Date(
-      date.getTime() + (date.getTimezoneOffset() + 540) * 60000,
-    );
-
-    return new Intl.DateTimeFormat("ko-KR", options).format(koreanTimeZoneDate);
-  }
-
   function handleOpenModal() {
     setIsModalOpen(true);
   }
@@ -160,7 +151,9 @@ function Projects() {
               <tr key={project._id}>
                 <td className="text-center">{project.projectName}</td>
                 <td className="text-center">{project.apiKey}</td>
-                <td className="text-center">{formatDate(project.createdAt)}</td>
+                <td className="text-center">
+                  {convertDateForm(project.createdAt)}
+                </td>
                 <td className="text-center">
                   <button
                     onClick={() => handleDeleteModal(project._id)}
