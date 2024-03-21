@@ -8,4 +8,11 @@ function convertDateForm(dateString) {
   return new Intl.DateTimeFormat("ko-KR", options).format(koreanTimeZoneDate);
 }
 
-export default convertDateForm;
+function convertFormatApiKey(apiKey) {
+  const start = apiKey.substr(0, 6);
+  const end = apiKey.substr(-6);
+
+  return `${start} ... ${end}`;
+}
+
+export { convertDateForm, convertFormatApiKey };

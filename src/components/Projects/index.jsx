@@ -10,7 +10,10 @@ import DeleteConfirmationModal from "../DeleteConfirmationModal";
 
 import generateUsePageViewTrackerCode from "../../apis";
 import validateProjectName from "../../utils/validationUtils";
-import convertDateForm from "../../utils/convertDateFormUtils";
+import {
+  convertDateForm,
+  convertFormatApiKey,
+} from "../../utils/convertFormUtils";
 
 function Projects() {
   const { user } = useUserStore();
@@ -137,24 +140,28 @@ function Projects() {
     <div className="p-10">
       <h1 className="text-lg font-semibold mb-4">프로젝트 별 Api key 발급</h1>
       <div className="mt-30 text-center">
-        <table>
-          <thead>
+        <table className="min-w-full table-auto">
+          <thead className="bg-gray-200">
             <tr>
-              <th className="uppercase">project name</th>
-              <th className="uppercase">api key</th>
-              <th className="uppercase">created</th>
-              <th className="uppercase">delete</th>
+              <th className="px-4 py-2 border uppercase">project name</th>
+              <th className="px-4 py-2 border uppercase">api key</th>
+              <th className="px-4 py-2 border uppercase">created</th>
+              <th className="px-4 py-2 border uppercase">delete</th>
             </tr>
           </thead>
           <tbody>
             {projects.map((project) => (
-              <tr key={project._id}>
-                <td className="text-center">{project.projectName}</td>
-                <td className="text-center">{project.apiKey}</td>
-                <td className="text-center">
+              <tr key={project._id} className="hover:bg-gray-100">
+                <td className="px-4 py-2 border text-center">
+                  {project.projectName}
+                </td>
+                <td className="px-4 py-2 border text-center">
+                  {convertFormatApiKey(project.apiKey)}
+                </td>
+                <td className="px-4 py-2 border text-center">
                   {convertDateForm(project.createdAt)}
                 </td>
-                <td className="text-center">
+                <td className="px-4 py-2 border text-center">
                   <button
                     onClick={() => handleDeleteModal(project._id)}
                     aria-label="delete"
