@@ -8,7 +8,6 @@ import { useUserStore } from "../../store/store";
 import Modal from "../Modal";
 import DeleteConfirmationModal from "../DeleteConfirmationModal";
 
-import generateUsePageViewTrackerCode from "../../apis";
 import validateProjectName from "../../utils/validationUtils";
 import {
   convertDateForm,
@@ -25,6 +24,7 @@ function Projects() {
   const [isCopied, setIsCopied] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState(null);
+  const [scriptCode, setScriptCode] = useState("");
 
   useEffect(() => {
     async function getProjects() {
@@ -69,9 +69,10 @@ function Projects() {
         },
       );
 
-      setProjects([...projects, response.data]);
+      setProjects([...projects, response.data.project]);
       setProjectName("");
-      setResponseData(response.data);
+      setResponseData(response.data.project);
+      setScriptCode(response.data.scriptCode);
       setIsCopied(false);
     } catch (error) {
       console.error(error);
@@ -110,6 +111,7 @@ function Projects() {
 
   function handleCloseModal() {
     setResponseData({});
+    setScriptCode("");
     setIsModalOpen(false);
     setProjectNameError("");
   }
@@ -125,10 +127,8 @@ function Projects() {
   }
 
   async function handleCopyCode() {
-    const codeSnippet = generateUsePageViewTrackerCode(responseData);
-
     try {
-      await navigator.clipboard.writeText(codeSnippet);
+      await navigator.clipboard.writeText(scriptCode);
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 3000);
     } catch (error) {
@@ -230,7 +230,7 @@ function Projects() {
               <div className="w-full">
                 <textarea
                   readOnly
-                  value={generateUsePageViewTrackerCode(responseData)}
+                  value={scriptCode}
                   className="font-mono text-sm bg-gray-100 p-2 w-full h-150 border border-gray-300 rounded-md"
                 />
                 <button
