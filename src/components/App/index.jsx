@@ -5,6 +5,7 @@ import Dashboard from "../Dashboard";
 import Overview from "../Overview";
 import Projects from "../Projects";
 import ErrorPage from "../ErrorPage";
+import Behavior from "../Behavior";
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
         <Route index element={<Navigate replace to="/dashboard/overview" />} />
         <Route path="/dashboard/overview" element={<Overview />} />
         <Route path="/dashboard/projects" element={<Projects />} />
+        <Route path="/dashboard/analytics/behavior" element={<Behavior />} />
+        <Route path="/dashboard/analytics/conversion" element={<Projects />} />
       </Route>
       <Route path="*" element={<ErrorPage errorMessage="404 Not Found!!" />} />
     </Routes>
