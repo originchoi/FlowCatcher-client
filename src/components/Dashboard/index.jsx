@@ -44,7 +44,7 @@ function Dashboard() {
       <Header />
       <div className="flex flex-row flex-1">
         <Navbar />
-        <div className="flex-grow">
+        <div className="flex-grow border border-gray-300">
           <Outlet />
         </div>
       </div>
