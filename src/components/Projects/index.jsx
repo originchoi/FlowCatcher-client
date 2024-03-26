@@ -138,7 +138,9 @@ function Projects() {
 
   return (
     <div className="p-10">
-      <h1 className="text-lg font-semibold mb-4">프로젝트 별 Api key 발급</h1>
+      <h1 className="text-lg font-semibold mb-4">
+        프로젝트별 유저 페이지 흐름 추적 서비스 코드 발급
+      </h1>
       <div className="mt-30 text-center">
         <table className="min-w-full table-auto">
           <thead className="bg-gray-200">
