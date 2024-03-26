@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { useEffect, useRef, useState } from "react";
 
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
@@ -15,6 +17,10 @@ function Behavior() {
   const [selectedProject, setSelectedProject] = useState({});
   const [isDropdown, setIsDropdown] = useState(false);
   const [topPagePath, setTopPagePath] = useState("");
+  const [sessionCount, setSessionCount] = useState(0);
+  const [totalVisitCount, setTotalVisitCount] = useState(0);
+  const [totalRefreshCount, setTotalRefreshCount] = useState(0);
+  const [totalExitCount, setTotalExitCount] = useState(0);
   const svgRef = useRef();
   const barChartRef = useRef();
 
@@ -62,25 +68,37 @@ function Behavior() {
     const links = [];
     const linkCounts = {};
     const visitCounts = {};
+    const exitCounts = {};
 
     sessions.forEach((session) => {
       session.pageViews.forEach((pageView, index) => {
-        const sourceIndex = nodes.findIndex((node) => node.id === pageView.url);
-
         if (!visitCounts[pageView.url]) {
           visitCounts[pageView.url] = 1;
         } else {
           visitCounts[pageView.url] += 1;
         }
 
-        if (sourceIndex === -1) {
-          nodes.push({
+        let node = nodes.find((n) => n.id === pageView.url);
+
+        if (!node) {
+          node = {
             id: pageView.url,
             pageTitle: pageView.pageTitle,
             referrer: pageView.referrer,
             timestamp: pageView.timestamp,
             visitCounts: visitCounts[pageView.url],
-          });
+            exitCounts: 0,
+          };
+          nodes.push(node);
+        }
+
+        if (!session.isActive && index === session.pageViews.length - 1) {
+          if (!exitCounts[pageView.url]) {
+            exitCounts[pageView.url] = 1;
+          } else {
+            exitCounts[pageView.url] += 1;
+          }
+          node.exitCounts = exitCounts[pageView.url];
         }
 
         if (index < session.pageViews.length - 1) {
@@ -129,6 +147,24 @@ function Behavior() {
     const zoom = d3.zoom().on("zoom", (event) => {
       group.attr("transform", event.transform);
     });
+    const tooltip = d3.select("#tooltip");
+
+    function dragstarted(event, d) {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+
+    function dragged(event, d) {
+      d.fx = event.x;
+      d.fy = event.y;
+    }
+
+    function dragended(event, d) {
+      if (!event.active) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }
 
     svg.call(zoom);
 
@@ -138,11 +174,29 @@ function Behavior() {
       .enter()
       .append("path")
       .style("stroke", (d) => (d.isSelfLoop ? "#0059ff" : "#aaa"))
-      .attr("stroke-width", 2)
+      .attr("stroke-width", 4)
       .attr("fill", "none")
       .attr("marker-end", (d) =>
         d.isSelfLoop ? "url(#refresh-arrow)" : "url(#arrow)",
-      );
+      )
+      .on("mouseover", function (event, d) {
+        tooltip
+          .style("left", event.pageX + 10 + "px")
+          .style("top", event.pageY + 10 + "px")
+          .style("display", "inline-block")
+          .html(
+            `Source: ${d.source.pageTitle}<br><br>Target: ${d.target.pageTitle}`,
+          );
+
+        d3.select(this).style("stroke", "red").style("stroke-width", 6);
+      })
+      .on("mouseout", function () {
+        tooltip.style("display", "none");
+
+        d3.select(this)
+          .style("stroke", (d) => (d.isSelfLoop ? "#0059ff" : "#aaa"))
+          .style("stroke-width", 4);
+      });
 
     const linkText = group
       .selectAll(".link-text")
@@ -152,7 +206,9 @@ function Behavior() {
       .attr("dy", "-5")
       .attr("text-anchor", "middle")
       .text((d) => d.count)
-      .style("fill", (d) => (d.isSelfLoop ? "#0059ff" : "black"));
+      .style("fill", (d) => (d.isSelfLoop ? "#0059ff" : "black"))
+      .style("font-weight", "bold")
+      .attr("font-size", "25px");
 
     const node = group
       .selectAll(".node")
@@ -163,7 +219,14 @@ function Behavior() {
       .attr("height", 80)
       .attr("rx", 15)
       .attr("ry", 15)
-      .style("fill", "#69b3a2");
+      .style("fill", "#dddee1")
+      .call(
+        d3
+          .drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended),
+      );
 
     const text = group
       .selectAll(".text")
@@ -183,14 +246,26 @@ function Behavior() {
       .attr("class", "visit-count-text")
       .attr("dx", 10)
       .attr("dy", 70)
-      .text((d) => `방문횟수: ${d.visitCount}`)
+      .text((d) => `방문 횟수: ${d.visitCount}`)
       .attr("fill", "black")
-      .attr("font-size", "14px");
+      .attr("font-size", "18px");
+
+    const exitCountText = group
+      .selectAll(".exit-count-text")
+      .data(nodes)
+      .enter()
+      .append("text")
+      .attr("class", "exit-count-text")
+      .text((d) => `이탈 횟수: ${d.exitCounts}`)
+      .attr("dx", 10)
+      .attr("dy", 46)
+      .attr("fill", "red")
+      .attr("font-size", "18px");
 
     svg
       .append("defs")
       .selectAll("marker")
-      .data(["arrow", "refresh-arrow"])
+      .data(["arrow", "refresh-arrow, hover-arrow"])
       .enter()
       .append("marker")
       .attr("id", (d) => d)
@@ -213,7 +288,7 @@ function Behavior() {
           .id((d) => d.id)
           .distance(800),
       )
-      .force("charge", d3.forceManyBody().strength(-1000))
+      .force("charge", d3.forceManyBody().strength(-2000))
       .force("center", d3.forceCenter(width / 2, height / 2));
 
     simulation.on("tick", () => {
@@ -243,7 +318,8 @@ function Behavior() {
             .attr("y", midPoint.y - bbox.height / 2 - 4)
             .attr("width", bbox.width + 8)
             .attr("height", bbox.height + 4)
-            .attr("fill", "#d9ebf3");
+            .attr("fill", "white")
+            .attr("fill-opacity", 0.5);
         } else {
           rect
             .attr("x", midPoint.x - bbox.width / 2 - 4)
@@ -256,6 +332,7 @@ function Behavior() {
       });
 
       visitCountText.attr("x", (d) => d.x).attr("y", (d) => d.y);
+      exitCountText.attr("x", (d) => d.x).attr("y", (d) => d.y);
     });
   }
 
@@ -302,8 +379,8 @@ function Behavior() {
       .attr("width", maxBarWidth)
       .attr("height", yScale.bandwidth())
       .attr("fill", "#ccc")
-      .attr("rx", 15)
-      .attr("ry", 15);
+      .attr("rx", 10)
+      .attr("ry", 10);
 
     svg
       .selectAll(".bar")
@@ -316,8 +393,8 @@ function Behavior() {
       .attr("width", (d) => xScale(d.visitCount))
       .attr("height", yScale.bandwidth())
       .attr("fill", "steelblue")
-      .attr("rx", 15)
-      .attr("ry", 15);
+      .attr("rx", 10)
+      .attr("ry", 10);
 
     svg
       .selectAll(".label")
@@ -374,6 +451,24 @@ function Behavior() {
         } else {
           setTopPagePath("");
         }
+
+        const totalVisits = sortedData.reduce(
+          (acc, node) => acc + node.visitCount,
+          0,
+        );
+        const totalExits = sortedData.reduce(
+          (acc, node) => acc + node.exitCounts,
+          0,
+        );
+
+        const totalRefreshes = pageViewData.links.reduce((acc, link) => {
+          return link.isSelfLoop ? acc + link.count : acc;
+        }, 0);
+
+        setSessionCount(response.data.length);
+        setTotalVisitCount(totalVisits);
+        setTotalExitCount(totalExits);
+        setTotalRefreshCount(totalRefreshes);
       } catch (error) {
         console.error(error);
       }
@@ -384,6 +479,10 @@ function Behavior() {
 
   return (
     <div className="flex flex-row flex-1 min-h-screen">
+      <div
+        id="tooltip"
+        class="hidden absolute z-50 px-5 bg-gray-300 text-lg rounded-lg shadow-lg max-w-4xl"
+      />
       <div className="w-200 bg-gray-100">
         <div className="flex flex-col items-start justify-start py-4 text-blue-500">
           <button
@@ -420,7 +519,7 @@ function Behavior() {
           <div className="md:flex">
             <div className="p-8">
               <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-                Analysis Preview
+                User flow analysis
               </div>
               <div className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
                 Path to the most accessed page
@@ -441,19 +540,51 @@ function Behavior() {
           </div>
         </div>
         <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-6xl my-20">
-          <div className="md:flex">
+          <div className="md:flex md:max-w-6xl">
             <div className="p-8">
               <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-                Analysis Preview
+                User flow analysis
               </div>
               <div className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
-                Submit Signup Form grouped by Path
+                Page flow for sessions by path
               </div>
-              <p className="mt-2 text-gray-500">
-                이곳에 당신의 분석 내용이 들어갑니다...
-              </p>
+              {selectedProject._id && totalVisitCount > 0 ? (
+                <div className="mt-4 p-4 bg-white shadow rounded-md">
+                  <h2 className="text-lg font-semibold text-gray-800">
+                    분석 요약
+                  </h2>
+                  <div className="grid grid-cols-2 gap-4 mt-4">
+                    <div className="flex items-center p-4 bg-yellow-100 rounded-md">
+                      <span className="text-yellow-600">총 세션 수:</span>
+                      <span className="ml-auto text-yellow-800 font-bold">
+                        {sessionCount}
+                      </span>
+                    </div>
+                    <div className="flex items-center p-4 bg-green-100 rounded-md">
+                      <span className="text-green-600">총 방문 횟수:</span>
+                      <span className="ml-auto text-green-800 font-bold">
+                        {totalVisitCount}
+                      </span>
+                    </div>
+                    <div className="flex items-center p-4 bg-blue-100 rounded-md">
+                      <span className="text-blue-600">총 새로고침 횟수:</span>
+                      <span className="ml-auto text-blue-800 font-bold">
+                        {totalRefreshCount}
+                      </span>
+                    </div>
+                    <div className="flex items-center p-4 bg-red-100 rounded-lg">
+                      <span className="text-red-600">총 이탈 횟수:</span>
+                      <span className="ml-auto text-red-800 font-bold">
+                        {totalExitCount}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                "프로젝트를 선택하시면 이곳에 당신의 분석 내용이 들어갑니다."
+              )}
               <div className="mt-4">
-                <svg ref={svgRef} width="1200" height="900"></svg>
+                <svg ref={svgRef} width="1100" height="900"></svg>
               </div>
             </div>
           </div>
