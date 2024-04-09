@@ -481,7 +481,7 @@ function Behavior() {
     <div className="flex flex-row flex-1 min-h-screen">
       <div
         id="tooltip"
-        class="hidden absolute z-50 px-5 bg-gray-300 text-lg rounded-lg shadow-lg max-w-4xl"
+        className="hidden absolute z-50 px-5 bg-gray-300 text-lg rounded-lg shadow-lg max-w-4xl"
       />
       <div className="w-200 bg-gray-100">
         <div className="flex flex-col items-start justify-start py-4 text-blue-500">
