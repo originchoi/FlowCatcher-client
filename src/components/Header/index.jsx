@@ -96,7 +96,7 @@ function Header() {
         <div className="flex items-center mb-5 mt-5">
           <img
             className="w-35 ml-10 mx-auto"
-            src="/assets/FlowChart_logo.png"
+            src="/assets/FlowCatcher_logo.png"
             alt="Logo"
           />
           {!isDashboard ? (
