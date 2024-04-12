@@ -30,14 +30,14 @@
 
 # 목차
 
-### [1. 프로젝트 소개](#🙋🏻-프로젝트-소개)
+### [1. 🙋🏻 프로젝트 소개](#-프로젝트-소개)
 
 - [FlowCatcher를 만들게 된 계기](#flowcatcher를-만들게-된-계기)
 - [주요 기능 설명](#주요-기능-설명)
 
-### [2. 기술 스택](#⚒️-기술-스택)
+### [2. ⚒ 기술 스택](#-기술-스택)
 
-### [3. 기술적 경험](#💪🏻-기술적-경험)
+### [3. 💪🏻 기술적 경험](#-기술적-경험)
 
 - ## [FE](#FE)
 - ## [BE](#BE)
@@ -74,20 +74,27 @@
 <br />
 
 ## 주요 기능 설명
-
-### [ 프로젝트 생성 및 추적 서비스 코드 발급 ]
+### [ 프로젝트 생성 및 추적 서비스 코드 발급 및 적용 ]
 ![servicecode_issued](https://github.com/originchoi/FlowCatcher-client/assets/116258834/e5f47d98-3842-464c-8786-5606cb3c4a7e)
-- 
+- 본인의 웹사이트에 사용할 서비스 코드를 발급받기 위해 사용자는 프로젝트를 만들 수 있습니다.
+- 프로젝트별로 서비스 코드를 발급 받을 수 있고, copy 버튼으로 복사할 수 있습니다.
 
-
-### [ 발급받은 코드 적용하기 ]
 ![servicecode_apply](https://github.com/originchoi/FlowCatcher-client/assets/116258834/031924a5-8a35-47a7-b412-4c691a7965f5)
-- 
+- 발급받은 서비스 코드(스크립트 코드)를 사용자의 비즈니스 웹사이트에 붙여넣기 하여 사용합니다.
 
 
-### [ 웹사이트 사용자 행동 데이터를 기반으로 페이지 이동 흐름을 시각화 ]
+### [ 웹사이트 사용자 행동 데이터를 기반으로 페이지 이동 흐름을 시각화 (행동 흐름 분석) ]
 ![analytics_behavior](https://github.com/originchoi/FlowCatcher-client/assets/116258834/04a68277-2059-4002-9c68-cb64b8982db5)
--
+- 행동 흐름 분석 탭에서 서비스 코드를 적용한 웹 사이트 내 방문자들의 페이지 이동 흐름을 볼 수 있습니다.
+- 가장 많이 방문한 페이지 5개가 메인페이지 주소 이하 url로 나열되어 그래프와 함께 나타냅니다.
+- 총 세션 수(방문자 수), 총 방문 횟수, 총 새로 고침 횟수, 총 이탈 횟수를 수치로 나타냅니다.
+- 가장 하단에 방문자들의 페이지 흐름을 시각화 하여 나타냅니다.
+  -  사용자는 각 url 별로 분류된 방문 페이지 노드를 드래그 할 수 있습니다.
+  -  각 노드(방문 페이지)는 이탈 횟수와 방문 횟수 수치를 나타냅니다.
+  -  이탈 횟수는 30분 이상 활동이 없는 방문자를 이탈로 간주하여, 마지막 방문페이지를 확인하여 나타냅니다.
+  -  노드와 노드 사이 화살표로 링크로 페이지 간 이동 관계를 나타냅니다.
+  -  화살표 링크에 호버 시, 어느 source(이동 전 페이지)에서 어느 target(이동 후 페이지)를 나타냅니다.
+  -  새로고침의 경우 이동 전, 후 페이지가 같기 때문에 자기 자신에게 링크가 연결되어집니다. 마찬가지로 호버 시, source와 target을 볼 수 있습니다.
 
 <br />
 
@@ -160,13 +167,21 @@
 <br />
 
 # 🏃‍♂️ 내 소개
+<div style="display:flex;">
+  <table >
+    <tr height="130px">
+      <td align="center" width="130px">
+        <a href="https://github.com/originchoi"><img src="https://avatars.githubusercontent.com/u/116258834?v=4" style="border-radius:50%"/></a>
+      </td>
+    </tr>
+    <tr height="50px">
+      <td align="center" width="130px">
+        <a href="https://github.com/originchoi">최기원 (Origin Choi)</a>
+      </td>
+    </tr>
+  </table>
+</div>
 
-<table >
-  <tr height="130px">
-    <td align="center" width="130px">
-      <a href="https://github.com/originchoi"><img src="https://avatars.githubusercontent.com/u/116258834?v=4" style="border-radius:50%"/></a>
-    </td>
-</table>
 
 <br />
 
