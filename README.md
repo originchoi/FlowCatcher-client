@@ -40,7 +40,6 @@
 ### [3. 💪🏻 기술적 경험](#-기술적-경험)
 
 - ## [FE](#FE)
-- ## [BE](#BE)
 
 ### [4. 내 소개](#🏃‍♂️-내-소개)
 
@@ -72,6 +71,7 @@
 그래서 **웹사이트 내 사용자 흐름을 시각화 해주는 서비스 FlowCatcher** 를 만들게 되었습니다.
 
 <br />
+<br />
 
 ## 주요 기능 설명
 ### [ 프로젝트 생성 및 추적 서비스 코드 발급 및 적용 ]
@@ -82,6 +82,8 @@
 ![servicecode_apply](https://github.com/originchoi/FlowCatcher-client/assets/116258834/031924a5-8a35-47a7-b412-4c691a7965f5)
 - 발급받은 서비스 코드(스크립트 코드)를 사용자의 비즈니스 웹사이트에 붙여넣기 하여 사용합니다.
 
+<br />
+<br />
 
 ### [ 웹사이트 사용자 행동 데이터를 기반으로 페이지 이동 흐름을 시각화 (행동 흐름 분석) ]
 ![analytics_behavior](https://github.com/originchoi/FlowCatcher-client/assets/116258834/04a68277-2059-4002-9c68-cb64b8982db5)
@@ -96,6 +98,7 @@
   -  화살표 링크에 호버 시, 어느 source(이동 전 페이지)에서 어느 target(이동 후 페이지)를 나타냅니다.
   -  새로고침의 경우 이동 전, 후 페이지가 같기 때문에 자기 자신에게 링크가 연결되어집니다. 마찬가지로 호버 시, source와 target을 볼 수 있습니다.
 
+<br />
 <br />
 
 # ⚒️ 기술 스택
@@ -130,24 +133,45 @@
 </div>
 
 <br />
+<br />
 
 # 💪🏻 기술적 경험
 
-## FE
+## 어떻게 웹사이트 방문자의 페이지 이동 흐름을 추적할 수 있을까?
+- **History API** 란?
 
--
-
-<br />
-
-###
+<img width="773" alt="image" src="https://github.com/originchoi/FlowCatcher-client/assets/116258834/6940c2ba-f4c6-4ec8-8d56-f1675fd1689e">
 
 <br />
-
-###
-
 <br />
 
-## BE
+- 메서드 오버라이딩
+  
+<img width="402" alt="image" src="https://github.com/originchoi/FlowCatcher-client/assets/116258834/4542f4d1-37dd-4119-a7b2-b43e29e0a679">
+ 
+<br />
+<br />
+
+## 세션 종료를 어떻게 판단할 수 있을까?
+- **Google Analytics** 에서의 세션 종료 판단기준
+  
+<img width="489" alt="image" src="https://github.com/originchoi/FlowCatcher-client/assets/116258834/3115d106-1390-4209-bb87-d273fdd46c5e">
+
+<br />
+<br />
+
+- **AWS Lambda**
+  
+<img width="669" alt="image" src="https://github.com/originchoi/FlowCatcher-client/assets/116258834/a9b9e773-973c-49e3-aea2-1853208ef8d5">
+
+<br />
+<br />
+
+## 데이터를 어떻게 시각화 할 것인가?
+<img width="783" alt="image" src="https://github.com/originchoi/FlowCatcher-client/assets/116258834/8b3dba0f-da5c-4501-885d-8784ad9cfb80">
+
+- **D3.js**
+  
 
 <br />
 
