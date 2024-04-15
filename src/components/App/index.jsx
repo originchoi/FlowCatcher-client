@@ -6,8 +6,15 @@ import Overview from "../Overview";
 import Projects from "../Projects";
 import ErrorPage from "../ErrorPage";
 import Behavior from "../Behavior";
+import MobileAcess from "../MobileAccess";
 
 function App() {
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    return <MobileAcess />;
+  }
+
   return (
     <Routes>
       <Route path="/" element={<MainPage />} />
