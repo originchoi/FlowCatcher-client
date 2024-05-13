@@ -96,11 +96,11 @@
 ## FlowCatcher를 만들게 된 계기
 
 비즈니스 웹사이트 사용자들은 모두 제각기 다른 흐름으로 페이지를 탐색합니다.
-
+</br>
 그 흐름들을 눈으로 볼 수 있다면 얼마나 좋을까요?
 
 기업과 개인 사업자 모두 자신의 서비스와 제품을 온라인으로 홍보하고 판매하는데 의존하고 있고
-
+</br>
 이러한 환경에서 웹사이트의 사용자 경험과 전환율은 비즈니스 성공의 핵심 요소가 되었습니다.
 
 그러나 많은 비즈니스가 자신의 웹사이트를 통해 어떤 사용자 행동이 일어나고 있는지 파악하지 못하고 있습니다.
@@ -545,6 +545,12 @@ function linkArc(d) {
 - 이 함수는 두 노드 사이의 링크를 곡선으로 표현합니다.
 - Math.hypot() 함수는 두 점 사이의 직선 거리(유클리드 거리)를 계산하여, 이를 곡선의 반지름으로 사용합니다.
 - SVG의 Path 요소를 사용하여 'M' (moveto) 명령으로 시작점에 커서를 위치시키고, 'A' (arc) 명령으로 곡선을 그립니다. 이 곡선은 시작점에서 종점까지 잇는 반원형 경로입니다.
+- linkArc가 구현된 모습
+<p>
+  <img width="400" alt="linkArc" src="https://github.com/originchoi/FlowCatcher-client/assets/116258834/6ef02375-1266-4e2f-b54c-09aa51dd050a">
+</p>
+
+위의 사진과 같이 두 노드사이의 링크, 즉 페이지 이동이 linkArc로 표현됩니다.
 
 </br>
 
@@ -563,9 +569,9 @@ function selfLoopArc(d) {
 - selfLoopArc 함수는 페이지가 새로고침되었을 때 사용됩니다. 이 함수는 동일 노드에서 시작해 동일 노드로 돌아오는 루프(자기 참조)를 그립니다.
 - 'M' 명령으로 시작 위치를 설정하고, 'C' (cubic Bezier curve) 명령을 사용하여 노드 자신을 향해 곡선을 그립니다. 여기서 dx와 dy는 곡선의 제어점 오프셋을 결정합니다.
 - 이 구조는 사용자가 동일한 페이지를 새로고침하는 행동을 시각적으로 나타내며, 곡선의 제어점은 루프의 크기와 모양을 조절합니다.
-- selfLoop 가 표현된 모습
+- selfLoop 가 구현된 모습
 <p>
-  <img width="300" alt="threejs-structure" src="https://github.com/originchoi/FlowCatcher-client/assets/116258834/144400fc-3d02-4b10-8aa7-5e77c57cb9c4">
+  <img width="400" alt="selfLoopArc" src="https://github.com/originchoi/FlowCatcher-client/assets/116258834/144400fc-3d02-4b10-8aa7-5e77c57cb9c4">
 </p>
 
 위의 사진과 같이 새로고침이 selfLoop로 표현됩니다.
