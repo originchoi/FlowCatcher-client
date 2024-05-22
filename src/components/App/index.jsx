@@ -4,6 +4,7 @@ import MainPage from "../MainPage";
 import Dashboard from "../Dashboard";
 import Overview from "../Overview";
 import Projects from "../Projects";
+import Conversion from "../Conversion";
 import ErrorPage from "../ErrorPage";
 import Behavior from "../Behavior";
 import MobileAcess from "../MobileAccess";
@@ -23,7 +24,10 @@ function App() {
         <Route path="/dashboard/overview" element={<Overview />} />
         <Route path="/dashboard/projects" element={<Projects />} />
         <Route path="/dashboard/analytics/behavior" element={<Behavior />} />
-        <Route path="/dashboard/analytics/conversion" element={<Projects />} />
+        <Route
+          path="/dashboard/analytics/conversion"
+          element={<Conversion />}
+        />
       </Route>
       <Route path="*" element={<ErrorPage errorMessage="404 Not Found!!" />} />
     </Routes>
