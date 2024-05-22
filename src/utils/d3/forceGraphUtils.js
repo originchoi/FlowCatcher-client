@@ -10,6 +10,10 @@ function drawForceGraph({ nodes, links }, svgRef) {
 
   svg.selectAll("*").remove();
 
+  if (nodes.length === 0 && links.length === 0) {
+    return;
+  }
+
   const group = svg.append("g");
   const zoom = d3.zoom().on("zoom", (event) => {
     group.attr("transform", event.transform);

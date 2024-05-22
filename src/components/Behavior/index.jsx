@@ -77,9 +77,7 @@ function Behavior() {
 
         const pageViewData = processPageViewData(response.data);
 
-        if (pageViewData.nodes.length > 0) {
-          drawForceGraph(pageViewData, svgRef);
-        }
+        drawForceGraph(pageViewData, svgRef);
 
         const sortedData = pageViewData.nodes.sort(
           (a, b) => b.visitCount - a.visitCount,
