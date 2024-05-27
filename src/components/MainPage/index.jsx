@@ -59,7 +59,7 @@ function MainPage() {
                 className="w-full h-150 object-contain rounded-t-lg"
               />
               <div className="p-2">
-                <h3 className="font-bold text-lg">User Flow Anaysis</h3>
+                <h3 className="font-bold text-lg">User Flow Analysis</h3>
                 <p>Track User interactions 🚀</p>
               </div>
             </div>
