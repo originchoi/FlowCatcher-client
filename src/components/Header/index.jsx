@@ -86,7 +86,7 @@ function Header() {
     }
   }
 
-  async function handleDashboard() {
+  function handleDashboard() {
     navigate("/dashboard");
   }
 
