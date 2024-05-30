@@ -28,26 +28,20 @@ function MainPage() {
             <source src="/videos/background.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-          <div className="relative z-10 flex flex-col justify-center items-center h-full">
-            <div className="text-5xl font-bold text-green-600 animate-floatUp mb-15">
+          <div className="relative z-10 flex flex-col justify-center items-center h-full bg-black bg-opacity-40 p-3 rounded">
+            <div className="text-5xl font-bold text-green-400 animate-floatUp mb-15">
               FlowCatcher
             </div>
-            <div className="text-xl font-bold mt-15 mb-15 animate-floatUp">
-              사용자 행동에 대한 귀중한 데이터를 확보해보세요
+            <div className="text-2xl font-bold text-white mt-15 mb-15 animate-floatUp">
+              사용자 행동에 대한 귀중한 데이터를 확보해 보세요
             </div>
-            <Link
-              to="/"
-              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-15 mb-15 animate-floatUp"
-            >
-              Get Started
-            </Link>
           </div>
         </div>
         <div className="flex justify-between px-4 py-10">
           <div className="w-1/2 p-4 flex items-center justify-center">
             <div className="text-center">
               <p className="text-2xl font-bold">
-                FlowCather 가 제공하는 기능을 사용해 보세요!
+                FlowCatcher 가 제공하는 기능을 사용해 보세요!
               </p>
             </div>
           </div>
