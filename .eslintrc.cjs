@@ -5,6 +5,7 @@ module.exports = {
   },
   extends: [
     "airbnb",
+    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:prettier/recommended",
   ],
@@ -27,7 +28,7 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["react", "prettier", "react-hooks"],
+  plugins: ["react", "@typescript-eslint", "prettier", "react-hooks"],
   rules: {
     semi: "warn",
     "no-unused-vars": "warn",
@@ -47,6 +48,9 @@ module.exports = {
         some: ["nesting", "id"],
       },
     ],
+    "react/no-array-index-key": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "no-empty-interface": "off",
   },
   settings: {
     react: {
