@@ -1,9 +1,14 @@
 function MobileAcess() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="text-center p-6 bg-white rounded-lg shadow-xl">
-        <h1 className="text-2xl font-bold text-red-500 mb-2">
-          Service Unavailable 😭
+      <div className="text-center p-6 bg-white rounded-lg shadow-xl border border-gray-200">
+        <img
+          className="mb-4 w-32 mx-auto"
+          src="/assets/FlowCatcher_logo.png"
+          alt="FlowCatcher Logo"
+        />
+        <h1 className="text-2xl font-bold text-red-500 mb-4">
+          Service Unavailable
         </h1>
         <p className="text-lg text-gray-700">
           The FlowCatcher service is not available on mobile devices.
