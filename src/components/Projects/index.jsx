@@ -5,10 +5,10 @@ import { FaRegCopy, FaCheck } from "react-icons/fa";
 import axios from "axios";
 import { useUserStore } from "../../store/store";
 
-import Modal from "../Modal";
+import Modal from "../Shared/Modal";
 import DeleteConfirmationModal from "../DeleteConfirmationModal";
 
-import validateProjectName from "../../utils/validationUtils";
+import validateProjectName from "../../utils/validationUtils.ts";
 import {
   convertDateForm,
   convertFormatApiKey,

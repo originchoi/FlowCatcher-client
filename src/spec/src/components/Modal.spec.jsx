@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 
-import Modal from "../../../components/Modal";
+import Modal from "../../../components/Shared/Modal";
 
 describe("Modal Component", () => {
   it("renders the modal when 'isOpen' is true", () => {
