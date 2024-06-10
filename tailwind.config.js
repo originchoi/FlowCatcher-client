@@ -21,10 +21,25 @@ export default {
           "0%": { opacity: "0", transform: "translateY(20px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        sdb: {
+          "0%": {
+            transform: "rotate(-45deg) translate(0, 0)",
+            opacity: "0",
+          },
+          "50%": {
+            opacity: "1",
+          },
+          "100%": {
+            transform: "rotate(-45deg) translate(-20px, 20px)",
+            opacity: "0",
+          },
+        },
       },
       animation: {
-        floatUp: "floatUp 2s ease-out forwards",
+        floatUp: "floatUp 3s ease-out forwards",
+        sdb: "sdb 3s infinite",
       },
     },
   },
+  plugins: [],
 };
