@@ -6,7 +6,7 @@ import axios from "axios";
 
 import { useUserStore } from "../../store/store";
 
-import processPageViewData from "../../utils/processPageViewData";
+import processPageViewData from "../../utils/d3/processPageViewData";
 import checkObjectEmpty from "../../utils/checkObjectEmptyUtils";
 import drawBarGraph from "../../utils/d3/barGraphUtils";
 import drawForceGraph from "../../utils/d3/forceGraphUtils";
