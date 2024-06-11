@@ -4,7 +4,7 @@ import Header from "../Header";
 import Footer from "../Footer";
 
 import { useHeaderStateStore } from "../../store/store";
-import handleScrollToContent from "../../utils/scrollToContentUtil";
+import handleScrollToContent from "../../utils/handleScrollToContent";
 
 function MainPage() {
   const { setHeaderState } = useHeaderStateStore();

@@ -7,9 +7,9 @@ import axios from "axios";
 import { useUserStore } from "../../store/store";
 
 import processPageViewData from "../../utils/d3/processPageViewData";
-import checkObjectEmpty from "../../utils/checkObjectEmptyUtils";
-import drawBarGraph from "../../utils/d3/barGraphUtils";
-import drawForceGraph from "../../utils/d3/forceGraphUtils";
+import checkObjectEmpty from "../../utils/checkObjectEmpty";
+import drawBarGraph from "../../utils/d3/drawBarGraph";
+import drawForceGraph from "../../utils/d3/drawForceGraph";
 
 function Behavior() {
   const { user } = useUserStore();

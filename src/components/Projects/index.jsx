@@ -8,11 +8,11 @@ import { useUserStore } from "../../store/store";
 import Modal from "../Shared/Modal";
 import DeleteConfirmationModal from "../DeleteConfirmationModal";
 
-import validateProjectName from "../../utils/validationUtils.ts";
+import validateProjectName from "../../utils/validateProjectName.ts";
 import {
   convertDateForm,
   convertFormatApiKey,
-} from "../../utils/convertFormUtils";
+} from "../../utils/convertFormUtils.ts";
 
 function Projects() {
   const { user } = useUserStore();
