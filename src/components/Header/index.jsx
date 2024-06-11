@@ -1,11 +1,8 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import axios from "axios";
-
-import { signInWithPopup, signOut } from "firebase/auth";
-import { auth, provider } from "../../config/firebase";
 import { useHeaderStateStore, useUserStore } from "../../store/store";
+import { checkLogin, handleLogOut, handleLogin } from "../../utils/auth";
 
 function Header() {
   const navigate = useNavigate();
@@ -14,77 +11,8 @@ function Header() {
   const isDashboard = headerState === "Dashboard";
 
   useEffect(() => {
-    async function checkLogin() {
-      const response = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}/auth/check`,
-        {
-          withCredentials: true,
-        },
-      );
-
-      if (response.data.result) {
-        setIsLoggedIn(true);
-        setUser(response.data.user);
-      }
-
-      return response.data;
-    }
-
-    checkLogin();
+    checkLogin(setIsLoggedIn, setUser);
   }, []);
-
-  async function logIn(userData) {
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/auth/signIn`,
-        userData,
-        {
-          headers: {
-            "content-Type": "application/json",
-          },
-          withCredentials: true,
-        },
-      );
-
-      if (response.data.result === "ok") {
-        setIsLoggedIn(true);
-        setUser(response.data.user);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function handleLogin() {
-    try {
-      const response = await signInWithPopup(auth, provider);
-      const { user: firebaseUser } = response;
-
-      if (firebaseUser) {
-        logIn(firebaseUser);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function handleLogOut() {
-    try {
-      await signOut(auth);
-
-      const response = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}/auth/signOut`,
-        { withCredentials: true },
-      );
-
-      if (response.data.result === "ok") {
-        setIsLoggedIn(false);
-        navigate("/");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   function handleDashboard() {
     navigate("/dashboard");
@@ -119,7 +47,7 @@ function Header() {
         {!isLoggedIn ? (
           <button
             className="p-2 mr-20 items-center rounded-full hover:bg-sky-50 cursor-pointer"
-            onClick={handleLogin}
+            onClick={() => handleLogin(setIsLoggedIn, setUser)}
           >
             <p className="m-3 text-sm">Sign In</p>
           </button>
@@ -133,7 +61,7 @@ function Header() {
             </button>
             <button
               className="p-2 mr-4 items-center rounded-full hover:bg-sky-50 cursor-pointer"
-              onClick={handleLogOut}
+              onClick={() => handleLogOut(setIsLoggedIn, navigate)}
             >
               <p className="m-3 text-sm">Sign Out</p>
             </button>
