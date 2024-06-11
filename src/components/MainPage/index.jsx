@@ -74,7 +74,7 @@ function MainPage() {
                 className="w-full h-150 object-contain rounded-t-lg"
               />
               <div className="border-t border-gray-300 mt-4 pt-4">
-                <h3 className="font-bold text-lg">User Flow Analysis</h3>
+                <h3 className="font-bold text-lg">User Flow Analytics</h3>
                 <p>Track User interactions 🚀</p>
               </div>
             </div>
@@ -85,7 +85,7 @@ function MainPage() {
                 className="w-full h-150 object-contain rounded-t-lg"
               />
               <div className="border-t border-gray-300 mt-4 pt-4">
-                <h3 className="font-bold text-lg">Conversion Rate Analysis</h3>
+                <h3 className="font-bold text-lg">Conversion Rate Analytics</h3>
                 <p>Optimize user flow 🔍</p>
               </div>
             </div>
