@@ -1,17 +1,18 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { useHeaderStateStore, useUserStore } from "../../store/store";
-import { checkLogin, handleLogOut, handleLogin } from "../../utils/auth";
+import { useHeaderStateStore } from "../../store/store";
+import useAuth from "../../apis/useAuth";
 
 function Header() {
   const navigate = useNavigate();
-  const { user, setUser, isLoggedIn, setIsLoggedIn } = useUserStore();
   const { headerState } = useHeaderStateStore();
   const isDashboard = headerState === "Dashboard";
 
+  const { user, isLoggedIn, handleLogin, handleLogout, checkLogin } = useAuth();
+
   useEffect(() => {
-    checkLogin(setIsLoggedIn, setUser);
+    checkLogin();
   }, []);
 
   function handleDashboard() {
@@ -47,7 +48,7 @@ function Header() {
         {!isLoggedIn ? (
           <button
             className="p-2 mr-20 items-center rounded-full hover:bg-sky-50 cursor-pointer"
-            onClick={() => handleLogin(setIsLoggedIn, setUser)}
+            onClick={handleLogin}
           >
             <p className="m-3 text-sm">Sign In</p>
           </button>
@@ -61,7 +62,7 @@ function Header() {
             </button>
             <button
               className="p-2 mr-4 items-center rounded-full hover:bg-sky-50 cursor-pointer"
-              onClick={() => handleLogOut(setIsLoggedIn, navigate)}
+              onClick={handleLogout}
             >
               <p className="m-3 text-sm">Sign Out</p>
             </button>
