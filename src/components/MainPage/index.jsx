@@ -5,9 +5,11 @@ import Footer from "../Footer";
 
 import { useHeaderStateStore } from "../../store/store";
 import handleScrollToContent from "../../utils/handleScrollToContent";
+import useGetStartedClick from "../../hooks/useGetStartedClick";
 
 function MainPage() {
   const { setHeaderState } = useHeaderStateStore();
+  const handleGetStartedClick = useGetStartedClick();
   const contentRef = useRef(null);
 
   useEffect(() => {
@@ -54,7 +56,7 @@ function MainPage() {
           ref={contentRef}
           className="flex flex-col justify-center items-center h-[100vh] px-4 py-10 bg-gray-200"
         >
-          <div className="w-full p-4 flex flex-col items-center mb-50">
+          <div className="w-full p-4 flex flex-col items-center mb-30">
             <div className="text-center">
               <p className="text-lg leading-loose md:text-xl md:leading-loose lg:text-2xl lg:leading-loose font-bold">
                 모든 사용자 행동 데이터를 한눈에 확인하고 한 곳에서 관리하세요.
@@ -66,6 +68,12 @@ function MainPage() {
               </p>
             </div>
           </div>
+          <button
+            onClick={handleGetStartedClick}
+            className="flex bg-blue-400 hover:bg-blue-600 text-white py-2 px-10 rounded mb-50 text-xl"
+          >
+            Get Started
+          </button>
           <div className="w-full p-4 flex flex-wrap justify-center items-center">
             <div className="bg-white rounded-lg shadow-lg p-4 w-full md:w-1/2 lg:w-1/3 mb-4 md:mr-2">
               <img
@@ -75,7 +83,7 @@ function MainPage() {
               />
               <div className="border-t border-gray-300 mt-4 pt-4">
                 <h3 className="font-bold text-lg">User Flow Analytics</h3>
-                <p>Track User interactions 🚀</p>
+                <p>Track User Interactions 🚀</p>
               </div>
             </div>
             <div className="bg-white rounded-lg shadow-lg p-4 w-full md:w-1/2 lg:w-1/3 mb-4 md:ml-2">
@@ -86,7 +94,7 @@ function MainPage() {
               />
               <div className="border-t border-gray-300 mt-4 pt-4">
                 <h3 className="font-bold text-lg">Conversion Rate Analytics</h3>
-                <p>Optimize user flow 🔍</p>
+                <p>Optimize User Flow 🔍</p>
               </div>
             </div>
           </div>
