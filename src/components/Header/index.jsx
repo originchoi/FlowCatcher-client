@@ -7,9 +7,8 @@ import useAuth from "../../apis/useAuth";
 function Header() {
   const navigate = useNavigate();
   const { headerState } = useHeaderStateStore();
-  const isDashboard = headerState === "Dashboard";
-
   const { user, isLoggedIn, handleLogin, handleLogout, checkLogin } = useAuth();
+  const isDashboard = headerState === "Dashboard";
 
   useEffect(() => {
     checkLogin();
