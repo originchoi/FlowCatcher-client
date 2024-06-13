@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 
 import { IoTrashOutline } from "react-icons/io5";
 import { FaRegCopy, FaCheck } from "react-icons/fa";
-import axios from "axios";
+
 import { useUserStore } from "../../store/store";
+import useProjects from "../../apis/useProjects";
 
 import Modal from "../Shared/Modal";
 import DeleteConfirmationModal from "../DeleteConfirmationModal";
@@ -16,66 +17,44 @@ import {
 
 function Projects() {
   const { user } = useUserStore();
-  const [projects, setProjects] = useState([]);
   const [projectName, setProjectName] = useState("");
-  const [projectNameError, setProjectNameError] = useState("");
+  const [projectErrorMessage, setProjectErrorMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [responseData, setResponseData] = useState({});
   const [isCopied, setIsCopied] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState(null);
   const [scriptCode, setScriptCode] = useState("");
+  const { projects, errorMessage, fetchProjects, addProject, deleteProject } =
+    useProjects(user?._id);
 
   useEffect(() => {
-    async function getProjects() {
-      if (!user._id) return;
-
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_SERVER_URL}/users/${user._id}/projects`,
-          {
-            withCredentials: true,
-          },
-        );
-
-        setProjects(response.data);
-      } catch (error) {
-        console.error(error);
-      }
+    if (user?._id) {
+      fetchProjects();
     }
-
-    getProjects();
-  }, [user._id]);
+  }, [fetchProjects, user._id]);
 
   async function handleSubmitProject(e) {
     e.preventDefault();
 
-    const errorMessage = validateProjectName(projectName);
+    const invalidProjectName = validateProjectName(projectName);
 
-    if (errorMessage) {
-      setProjectNameError(errorMessage);
+    if (invalidProjectName) {
+      setProjectErrorMessage(invalidProjectName);
       return;
     }
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/users/${user._id}/projects`,
-        { projectName },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        },
-      );
+      const projectData = await addProject(projectName);
 
-      setProjects([...projects, response.data.project]);
       setProjectName("");
-      setResponseData(response.data.project);
-      setScriptCode(response.data.scriptCode);
+      setResponseData(projectData.project);
+      setScriptCode(projectData.scriptCode);
       setIsCopied(false);
     } catch (error) {
-      console.error(error);
+      setProjectErrorMessage(
+        "프로젝트 생성 중 오류가 발생했습니다. 다시 시도해 주세요.",
+      );
     }
   }
 
@@ -83,20 +62,14 @@ function Projects() {
     if (!projectToDelete) return;
 
     try {
-      await axios.delete(
-        `${import.meta.env.VITE_SERVER_URL}/users/${user._id}/projects/${projectToDelete}`,
-        {
-          withCredentials: true,
-        },
-      );
+      await deleteProject(projectToDelete);
 
-      setProjects(
-        projects.filter((project) => project._id !== projectToDelete),
-      );
       setIsDeleteModalOpen(false);
       setProjectToDelete(null);
     } catch (error) {
-      console.log(error);
+      setProjectErrorMessage(
+        "프로젝트 삭제 중 오류가 발생했습니다. 다시 시도해 주세요.",
+      );
     }
   }
 
@@ -113,7 +86,7 @@ function Projects() {
     setResponseData({});
     setScriptCode("");
     setIsModalOpen(false);
-    setProjectNameError("");
+    setProjectErrorMessage("");
   }
 
   function handleProjectNameChange(e) {
@@ -121,18 +94,21 @@ function Projects() {
 
     setProjectName(newName);
 
-    if (projectNameError) {
-      setProjectNameError("");
+    if (projectErrorMessage) {
+      setProjectErrorMessage("");
     }
   }
 
   async function handleCopyCode() {
     try {
       await navigator.clipboard.writeText(scriptCode);
+
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 3000);
     } catch (error) {
-      console.error("Failed to copy the code:", error);
+      setProjectErrorMessage(
+        "코드 복사 중 오류가 발생했습니다. 다시 시도해 주세요.",
+      );
     }
   }
 
@@ -141,6 +117,11 @@ function Projects() {
       <h1 className="text-lg font-semibold mb-4">
         프로젝트별 유저 페이지 흐름 추적 서비스 코드 발급
       </h1>
+      {errorMessage && (
+        <p className="text-red-500">
+          데이터를 가져오는 중 오류가 발생했습니다. 다시 시도해 주세요.
+        </p>
+      )}
       <div className="mt-30 text-center">
         <table className="min-w-full table-auto">
           <thead className="bg-gray-200">
@@ -201,8 +182,10 @@ function Projects() {
               placeholder="프로젝트 이름을 입력하세요"
               required
             />
-            {projectNameError && (
-              <p className="text-red-500 text-xs italic">{projectNameError}</p>
+            {projectErrorMessage && (
+              <p className="text-red-500 text-xs italic">
+                {projectErrorMessage}
+              </p>
             )}
             <button
               type="submit"
