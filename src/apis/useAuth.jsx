@@ -22,9 +22,12 @@ function useAuth() {
       if (response.data.result) {
         setIsLoggedIn(true);
         setUser(response.data.user);
+      } else {
+        navigate("/");
       }
     } catch (error) {
       console.error("Failed to check login status:", error);
+      navigate("/");
     }
   }
 
