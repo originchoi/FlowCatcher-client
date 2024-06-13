@@ -5,11 +5,11 @@ import { FaRegCopy, FaCheck } from "react-icons/fa";
 
 import { useUserStore } from "../../store/store";
 import useProjects from "../../apis/useProjects";
+import useProjectActions from "../../hooks/useProjectActions";
 
 import Modal from "../Shared/Modal";
 import DeleteConfirmationModal from "../DeleteConfirmationModal";
 
-import validateProjectName from "../../utils/validateProjectName.ts";
 import {
   convertDateForm,
   convertFormatApiKey,
@@ -17,66 +17,35 @@ import {
 
 function Projects() {
   const { user } = useUserStore();
-  const [projectName, setProjectName] = useState("");
-  const [projectErrorMessage, setProjectErrorMessage] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [responseData, setResponseData] = useState({});
-  const [isCopied, setIsCopied] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [projectToDelete, setProjectToDelete] = useState(null);
-  const [scriptCode, setScriptCode] = useState("");
   const { projects, errorMessage, fetchProjects, addProject, deleteProject } =
     useProjects(user?._id);
+  const {
+    projectName,
+    projectErrorMessage,
+    responseData,
+    isCopied,
+    isDeleteModalOpen,
+    scriptCode,
+    setResponseData,
+    setScriptCode,
+    setIsDeleteModalOpen,
+    handleSubmitProject,
+    handleDeleteProject,
+    handleDeleteModal,
+    handleCopyCode,
+    handleProjectNameChange,
+  } = useProjectActions({
+    addProject,
+    deleteProject,
+    fetchProjects,
+  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (user?._id) {
       fetchProjects();
     }
   }, [fetchProjects, user._id]);
-
-  async function handleSubmitProject(e) {
-    e.preventDefault();
-
-    const invalidProjectName = validateProjectName(projectName);
-
-    if (invalidProjectName) {
-      setProjectErrorMessage(invalidProjectName);
-      return;
-    }
-
-    try {
-      const projectData = await addProject(projectName);
-
-      setProjectName("");
-      setResponseData(projectData.project);
-      setScriptCode(projectData.scriptCode);
-      setIsCopied(false);
-    } catch (error) {
-      setProjectErrorMessage(
-        "프로젝트 생성 중 오류가 발생했습니다. 다시 시도해 주세요.",
-      );
-    }
-  }
-
-  async function handleDeleteProject() {
-    if (!projectToDelete) return;
-
-    try {
-      await deleteProject(projectToDelete);
-
-      setIsDeleteModalOpen(false);
-      setProjectToDelete(null);
-    } catch (error) {
-      setProjectErrorMessage(
-        "프로젝트 삭제 중 오류가 발생했습니다. 다시 시도해 주세요.",
-      );
-    }
-  }
-
-  function handleDeleteModal(projectId) {
-    setIsDeleteModalOpen(true);
-    setProjectToDelete(projectId);
-  }
 
   function handleOpenModal() {
     setIsModalOpen(true);
@@ -86,30 +55,6 @@ function Projects() {
     setResponseData({});
     setScriptCode("");
     setIsModalOpen(false);
-    setProjectErrorMessage("");
-  }
-
-  function handleProjectNameChange(e) {
-    const newName = e.target.value;
-
-    setProjectName(newName);
-
-    if (projectErrorMessage) {
-      setProjectErrorMessage("");
-    }
-  }
-
-  async function handleCopyCode() {
-    try {
-      await navigator.clipboard.writeText(scriptCode);
-
-      setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 3000);
-    } catch (error) {
-      setProjectErrorMessage(
-        "코드 복사 중 오류가 발생했습니다. 다시 시도해 주세요.",
-      );
-    }
   }
 
   return (
