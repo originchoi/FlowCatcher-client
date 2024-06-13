@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
 
-import axios from "axios";
-
 import { useUserStore } from "../../store/store";
+import useProjects from "../../apis/useProjects";
 
 import processPageViewData from "../../utils/d3/processPageViewData";
 import checkObjectEmpty from "../../utils/checkObjectEmpty";
@@ -13,7 +13,7 @@ import drawForceGraph from "../../utils/d3/drawForceGraph";
 
 function Behavior() {
   const { user } = useUserStore();
-  const [projects, setProjects] = useState([]);
+  const { projects, fetchProjects } = useProjects(user?._id);
   const [selectedProject, setSelectedProject] = useState({});
   const [isDropdown, setIsDropdown] = useState(false);
   const [topPagePath, setTopPagePath] = useState("");
@@ -25,25 +25,10 @@ function Behavior() {
   const barChartRef = useRef();
 
   useEffect(() => {
-    async function getProjects() {
-      if (!user._id) return;
-
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_SERVER_URL}/users/${user._id}/projects`,
-          {
-            withCredentials: true,
-          },
-        );
-
-        setProjects(response.data);
-      } catch (error) {
-        console.error(error);
-      }
+    if (user?._id) {
+      fetchProjects();
     }
-
-    getProjects();
-  }, [user._id]);
+  }, [fetchProjects, user._id]);
 
   useEffect(() => {
     if (selectedProject._id) {
@@ -160,7 +145,7 @@ function Behavior() {
           <div className="md:flex">
             <div className="p-8">
               <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-                User flow analysis
+                User flow analytics
               </div>
               <div className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
                 Path to the most accessed page
@@ -184,7 +169,7 @@ function Behavior() {
           <div className="md:flex md:max-w-6xl">
             <div className="p-8">
               <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-                User flow analysis
+                User flow analytics
               </div>
               <div className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
                 Page flow for sessions by path
