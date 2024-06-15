@@ -14,6 +14,39 @@ function MainPage() {
 
   useEffect(() => {
     setHeaderState("MainPage");
+
+    const container = document.querySelectorAll(".card-container");
+    container.forEach((card) => {
+      card.style.willChange = "transform";
+
+      card.addEventListener("mousemove", function (e) {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        const dampenFactor = 0.1;
+        const rotateY = -x * dampenFactor;
+        const rotateX = y * dampenFactor;
+
+        const maxRotate = 20;
+        const clampedRotateY = Math.min(
+          Math.max(rotateY, -maxRotate),
+          maxRotate,
+        );
+        const clampedRotateX = Math.min(
+          Math.max(rotateX, -maxRotate),
+          maxRotate,
+        );
+
+        card.style.transform = `perspective(350px) rotateX(${clampedRotateX}deg) rotateY(${clampedRotateY}deg)`;
+        card.style.transition = "transform 0.1s";
+      });
+
+      card.addEventListener("mouseout", function () {
+        card.style.transform = "perspective(350px) rotateY(0deg) rotateX(0deg)";
+        card.style.transition = "transform 0.5s";
+      });
+    });
   }, []);
 
   return (
@@ -74,8 +107,9 @@ function MainPage() {
           >
             Get Started
           </button>
-          <div className="w-full p-4 flex flex-wrap justify-center items-center">
-            <div className="bg-white rounded-lg shadow-lg p-4 w-full md:w-1/2 lg:w-1/3 mb-4 md:mr-2">
+          <div className="w-full p-4 flex flex-wrap justify-center items-center gap-30">
+            <div className="card-container bg-white rounded-lg shadow-lg p-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 relative">
+              <div className="absolute w-full h-full bg-gradient-to-r from-transparent  transition-all"></div>
               <img
                 src="/assets/user_flow.png"
                 alt="Description"
@@ -86,7 +120,8 @@ function MainPage() {
                 <p>Track User Interactions 🚀</p>
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-4 w-full md:w-1/2 lg:w-1/3 mb-4 md:ml-2">
+            <div className="card-container bg-white rounded-lg shadow-lg p-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 relative">
+              <div className="absolute w-full h-full bg-gradient-to-r from-transparent transition-all"></div>
               <img
                 src="/assets/conversion_analysis.png"
                 alt="Description"
