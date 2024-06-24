@@ -39,7 +39,10 @@ module.exports = {
     "react/jsx-no-bind": "off",
     "react/self-closing-comp": "off",
     "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": ["warn", { extensions: [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [
+      "warn",
+      { extensions: [".js", ".jsx", ".ts", ".tsx"] },
+    ],
     "no-param-reassign": 0,
     "no-underscore-dangle": "off",
     "jsx-a11y/label-has-associated-control": [
@@ -51,10 +54,26 @@ module.exports = {
     "react/no-array-index-key": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "no-empty-interface": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        js: "never",
+        jsx: "never",
+        ts: "never",
+        tsx: "never",
+      },
+    ],
   },
   settings: {
     react: {
       version: "detect",
+    },
+    "import/resolver": {
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
+      typescript: {},
     },
   },
 };
