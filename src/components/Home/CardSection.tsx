@@ -1,7 +1,19 @@
 import Card from "../Shared/Card";
 
-function CardSection({ handleCardClick }) {
-  const cards = [
+interface CardSectionProps {
+  handleCardClick: (card: CardProps) => void;
+}
+
+interface CardProps {
+  title: string;
+  description: string;
+  image: string;
+  gifs?: string[];
+  customMessage?: string;
+}
+
+function CardSection({ handleCardClick }: CardSectionProps) {
+  const cards: CardProps[] = [
     {
       title: "User Flow Analytics",
       description: "Track User Interactions 🚀",
