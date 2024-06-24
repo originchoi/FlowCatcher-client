@@ -1,4 +1,15 @@
-function Card({ card, onClick }) {
+interface CardProps {
+  card: {
+    title: string;
+    description: string;
+    image: string;
+    gifs?: string[];
+    customMessage?: string;
+  };
+  onClick: () => void;
+}
+
+function Card({ card, onClick }: CardProps) {
   return (
     <div
       className="card-container bg-white rounded-lg shadow-lg p-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 relative cursor-pointer"
