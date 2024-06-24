@@ -13,7 +13,7 @@ import DeleteConfirmationModal from "../DeleteConfirmationModal";
 import {
   convertDateForm,
   convertFormatApiKey,
-} from "../../utils/convertFormUtils.ts";
+} from "../../utils/convertFormUtils";
 
 function Projects() {
   const { user } = useUserStore();

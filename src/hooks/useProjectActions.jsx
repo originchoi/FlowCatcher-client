@@ -1,5 +1,5 @@
 import { useState } from "react";
-import validateProjectName from "../utils/validateProjectName.ts";
+import validateProjectName from "../utils/validateProjectName";
 
 function useProjectActions({ addProject, deleteProject, fetchProjects }) {
   const [projectName, setProjectName] = useState("");
