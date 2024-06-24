@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 
-function useCardEventListeners() {
+function useCardEventListeners(): void {
   useEffect(() => {
-    const container = document.querySelectorAll(".card-container");
+    const container = document.querySelectorAll<HTMLElement>(".card-container");
 
     container.forEach((card) => {
       card.style.willChange = "transform";
 
-      const handleMouseMove = (e) => {
+      const handleMouseMove = (e: MouseEvent) => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
