@@ -5,7 +5,7 @@ import Dashboard from "../Dashboard/Dashboard";
 import Overview from "../Dashboard/Overview";
 import Projects from "../Dashboard/Projects";
 import Conversion from "../Dashboard/Conversion";
-import ErrorPage from "../ErrorPage";
+import ErrorPage from "../Shared/ErrorPage";
 import Behavior from "../Dashboard/Behavior";
 import MobileAcess from "../MobileAccess";
 

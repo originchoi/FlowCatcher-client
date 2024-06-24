@@ -1,10 +1,6 @@
 import { Link } from "react-router-dom";
 
-function ErrorPage({
-  errorMessage = "Page Not Found",
-}: {
-  errorMessage?: string;
-}) {
+function ErrorPage({ errorMessage }: { errorMessage: string }) {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-900">
       <div className="text-center">
