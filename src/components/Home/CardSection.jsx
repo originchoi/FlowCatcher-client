@@ -1,4 +1,4 @@
-import Card from "../Card";
+import Card from "../Shared/Card";
 
 function CardSection({ handleCardClick }) {
   const cards = [

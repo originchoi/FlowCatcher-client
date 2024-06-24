@@ -3,10 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import Header from "../Header";
 import Footer from "../Footer";
 import Modal from "../Shared/Modal";
-import ModalContent from "../ModalContent";
-import VideoSection from "../VideoSection";
-import TextSection from "../TextSection";
-import CardSection from "../CardSection";
+import ModalContent from "./ModalContent";
+import VideoSection from "./HeroSection";
+import TextSection from "./TextSection";
+import CardSection from "./CardSection";
 
 import { useHeaderStateStore } from "../../store/store";
 import handleScrollToContent from "../../utils/handleScrollToContent";

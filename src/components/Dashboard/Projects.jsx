@@ -8,7 +8,7 @@ import useProjects from "../../apis/useProjects";
 import useProjectActions from "../../hooks/useProjectActions";
 
 import Modal from "../Shared/Modal";
-import DeleteConfirmationModal from "../DeleteConfirmationModal";
+import DeleteConfirmationModal from "../Shared/DeleteConfirmationModal";
 
 import {
   convertDateForm,

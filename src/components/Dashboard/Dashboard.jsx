@@ -5,7 +5,7 @@ import { useHeaderStateStore } from "../../store/store";
 import useAuth from "../../apis/useAuth";
 
 import Header from "../Header";
-import Navbar from "../NavBar";
+import Navbar from "./NavBar";
 
 function Dashboard() {
   const { setHeaderState } = useHeaderStateStore();

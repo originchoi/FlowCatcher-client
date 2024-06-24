@@ -1,12 +1,12 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import MainPage from "../MainPage";
-import Dashboard from "../Dashboard";
-import Overview from "../Overview";
-import Projects from "../Projects";
-import Conversion from "../Conversion";
+import MainPage from "../Home/MainPage";
+import Dashboard from "../Dashboard/Dashboard";
+import Overview from "../Dashboard/Overview";
+import Projects from "../Dashboard/Projects";
+import Conversion from "../Dashboard/Conversion";
 import ErrorPage from "../ErrorPage";
-import Behavior from "../Behavior";
+import Behavior from "../Dashboard/Behavior";
 import MobileAcess from "../MobileAccess";
 
 function App() {
