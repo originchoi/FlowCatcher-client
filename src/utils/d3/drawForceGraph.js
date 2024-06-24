@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import * as d3 from "d3";
-import { linkArc, selfLoopArc } from "./graphShapeUtils";
+import { linkArc, selfLoopArc } from "./drawArcUtils";
 
 function drawForceGraph({ nodes, links }, svgRef) {
   const svg = d3.select(svgRef.current);

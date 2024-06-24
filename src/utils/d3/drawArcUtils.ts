@@ -1,10 +1,20 @@
-function linkArc(d) {
+interface Node {
+  x: number;
+  y: number;
+}
+
+interface Link {
+  source: Node;
+  target: Node;
+}
+
+function linkArc(d: Link): string {
   const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
 
   return `M${d.source.x},${d.source.y}A${r},${r} 0 0,1 ${d.target.x},${d.target.y}`;
 }
 
-function selfLoopArc(d) {
+function selfLoopArc(d: Link): string {
   const { x } = d.source;
   const { y } = d.source;
   const dx = 140;
