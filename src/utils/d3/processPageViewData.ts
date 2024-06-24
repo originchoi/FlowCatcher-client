@@ -1,9 +1,43 @@
-function processPageViewData(sessions) {
-  const nodes = [];
-  const links = [];
-  const linkCounts = {};
-  const visitCounts = {};
-  const exitCounts = {};
+interface PageView {
+  url: string;
+  pageTitle: string;
+  referrer: string;
+  timestamp: string;
+}
+
+interface Session {
+  pageViews: PageView[];
+  isActive: boolean;
+}
+
+interface Node {
+  id: string;
+  pageTitle: string;
+  referrer: string;
+  timestamp: string;
+  visitCounts: number;
+  exitCounts: number;
+  visitCount?: number;
+}
+
+interface Link {
+  source: string;
+  target: string;
+  isSelfLoop: boolean;
+  count: number;
+}
+
+interface ProcessedData {
+  nodes: Node[];
+  links: Link[];
+}
+
+function processPageViewData(sessions: Session[]): ProcessedData {
+  const nodes: Node[] = [];
+  const links: Link[] = [];
+  const linkCounts: { [key: string]: number } = {};
+  const visitCounts: { [key: string]: number } = {};
+  const exitCounts: { [key: string]: number } = {};
 
   sessions.forEach((session) => {
     session.pageViews.forEach((pageView, index) => {
