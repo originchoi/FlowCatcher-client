@@ -4,7 +4,7 @@ import Header from "../Header";
 import Footer from "../Footer";
 import Modal from "../Shared/Modal";
 import ModalContent from "./ModalContent";
-import VideoSection from "./HeroSection";
+import HeroSection from "./HeroSection";
 import TextSection from "./TextSection";
 import CardSection from "./CardSection";
 
@@ -36,7 +36,7 @@ function MainPage() {
     <div className="flex flex-col min-h-screen">
       <Header />
       <div className="flex-grow">
-        <VideoSection
+        <HeroSection
           contentRef={contentRef}
           handleScrollToContent={handleScrollToContent}
         />

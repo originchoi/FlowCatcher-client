@@ -1,10 +1,22 @@
-function VideoSection({ contentRef, handleScrollToContent }) {
+import { useEffect, useRef } from "react";
+
+function HeroSection({ contentRef, handleScrollToContent }) {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.setAttribute("playsinline", "true");
+    }
+  }, []);
+
   return (
     <div className="relative h-[90vh] text-center">
       <video
+        ref={videoRef}
         autoPlay
         loop
         muted
+        playsInline
         className="absolute top-0 left-0 w-full h-full object-cover"
         style={{ filter: "blur(1px)" }}
       >
@@ -35,4 +47,4 @@ function VideoSection({ contentRef, handleScrollToContent }) {
   );
 }
 
-export default VideoSection;
+export default HeroSection;
