@@ -1,15 +1,15 @@
 import Card from "../Shared/Card";
 
-interface CardSectionProps {
-  handleCardClick: (card: CardProps) => void;
-}
-
 interface CardProps {
   title: string;
   description: string;
   image: string;
   gifs?: string[];
   customMessage?: string;
+}
+
+interface CardSectionProps {
+  handleCardClick: (card: CardProps) => void;
 }
 
 function CardSection({ handleCardClick }: CardSectionProps) {
