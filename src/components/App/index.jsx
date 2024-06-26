@@ -7,15 +7,8 @@ import Projects from "../Dashboard/Projects";
 import Conversion from "../Dashboard/Conversion";
 import ErrorPage from "../Shared/ErrorPage";
 import Behavior from "../Dashboard/Behavior";
-import MobileAcess from "../MobileAccess";
 
 function App() {
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-  if (isMobile) {
-    return <MobileAcess />;
-  }
-
   return (
     <Routes>
       <Route path="/" element={<MainPage />} />
