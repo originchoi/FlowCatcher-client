@@ -1,7 +1,7 @@
 function ModalContent({ selectedCard }) {
   return (
     <div className="flex flex-col items-center">
-      <h3 className="text-2xl font-bold mt-10 mb-30">
+      <h3 className="text-xl sm:text-2xl font-bold mt-10 mb-30">
         How to use {selectedCard.title}
       </h3>
       {selectedCard.gifs.length > 0 && (

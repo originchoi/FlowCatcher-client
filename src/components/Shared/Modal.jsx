@@ -31,7 +31,7 @@ function Modal({ isOpen, onClose, children, width = "max-w-lg" }) {
           {isMainPage && (
             <button
               onClick={onClose}
-              className="absolute top-20 right-13 p-3 text-black rounded-full hover:bg-red-100"
+              className="absolute top-5 right-5 p-2 text-black rounded-full hover:bg-red-100 md:top-20 md:right-13"
               aria-label="Close modal"
             >
               <IoCloseOutline size={24} />
