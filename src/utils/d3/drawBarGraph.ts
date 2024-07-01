@@ -1,10 +1,5 @@
 import * as d3 from "d3";
-
-interface BarData {
-  pageTitle: string;
-  visitCount: number;
-  isPlaceholder?: boolean;
-}
+import { BarData } from "src/types/utils";
 
 function drawBarGraph(
   data: BarData[],

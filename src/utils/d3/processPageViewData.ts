@@ -1,36 +1,4 @@
-interface PageView {
-  url: string;
-  pageTitle: string;
-  referrer: string;
-  timestamp: string;
-}
-
-interface Session {
-  pageViews: PageView[];
-  isActive: boolean;
-}
-
-interface Node {
-  id: string;
-  pageTitle: string;
-  referrer: string;
-  timestamp: string;
-  visitCounts: number;
-  exitCounts: number;
-  visitCount?: number;
-}
-
-interface Link {
-  source: string;
-  target: string;
-  isSelfLoop: boolean;
-  count: number;
-}
-
-interface ProcessedData {
-  nodes: Node[];
-  links: Link[];
-}
+import { Session, Node, Link, ProcessedData } from "src/types/utils";
 
 function processPageViewData(sessions: Session[]): ProcessedData {
   const nodes: Node[] = [];
