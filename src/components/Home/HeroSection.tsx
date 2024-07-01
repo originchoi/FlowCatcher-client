@@ -1,7 +1,12 @@
 import { useEffect, useRef } from "react";
 
-function HeroSection({ contentRef, handleScrollToContent }) {
-  const videoRef = useRef(null);
+interface HeroSectionProps {
+  contentRef: React.RefObject<HTMLDivElement>;
+  handleScrollToContent: (ref: React.RefObject<HTMLDivElement>) => void;
+}
+
+function HeroSection({ contentRef, handleScrollToContent }: HeroSectionProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (videoRef.current) {
