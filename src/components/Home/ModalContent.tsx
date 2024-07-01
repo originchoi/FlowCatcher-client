@@ -1,4 +1,12 @@
-function ModalContent({ selectedCard }) {
+interface ModalContentProps {
+  selectedCard: {
+    title: string;
+    gifs: string[];
+    customMessage?: string;
+  };
+}
+
+function ModalContent({ selectedCard }: ModalContentProps) {
   return (
     <div className="flex flex-col items-center">
       <h3 className="text-xl sm:text-2xl font-bold mt-10 mb-30">
