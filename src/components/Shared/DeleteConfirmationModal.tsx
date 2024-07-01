@@ -1,4 +1,14 @@
-function DeleteConfirmationModal({ isOpen, onClose, onConfirm }) {
+interface DeleteConfirmationModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+}
+
+function DeleteConfirmationModal({
+  isOpen,
+  onClose,
+  onConfirm,
+}: DeleteConfirmationModalProps) {
   if (!isOpen) return null;
 
   return (
