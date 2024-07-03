@@ -13,13 +13,19 @@ import handleScrollToContent from "../../utils/handleScrollToContent";
 import useGetStartedClick from "../../hooks/useGetStartedClick";
 import useCardEventListeners from "../../hooks/useCardEventListeners";
 
+interface CardProps {
+  title: string;
+  gifs?: string[];
+  customMessage?: string;
+}
+
 function MainPage() {
   const { setHeaderState } = useHeaderStateStore();
   const handleGetStartedClick = useGetStartedClick();
 
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedCard, setSelectedCard] = useState<CardProps | null>(null);
 
   useEffect(() => {
     setHeaderState("MainPage");
@@ -27,7 +33,7 @@ function MainPage() {
 
   useCardEventListeners();
 
-  function handleCardClick(card) {
+  function handleCardClick(card: CardProps) {
     setSelectedCard(card);
     setIsModalOpen(true);
   }
@@ -60,7 +66,14 @@ function MainPage() {
         onClose={() => setIsModalOpen(false)}
         width="max-w-2xl"
       >
-        {selectedCard && <ModalContent selectedCard={selectedCard} />}
+        {selectedCard && (
+          <ModalContent
+            selectedCard={{
+              ...selectedCard,
+              gifs: selectedCard.gifs ?? [],
+            }}
+          />
+        )}
       </Modal>
     </div>
   );
