@@ -1,8 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, ReactNode } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import { useHeaderStateStore } from "../../store/store";
 
-function Modal({ isOpen, onClose, children, width = "max-w-lg" }) {
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  children: ReactNode;
+  width?: string;
+}
+
+function Modal({ isOpen, onClose, children, width = "max-w-lg" }: ModalProps) {
   const { headerState } = useHeaderStateStore();
   const isMainPage = headerState === "MainPage";
   const isDashboard = headerState === "Dashboard";
