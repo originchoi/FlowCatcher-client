@@ -3,6 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { useHeaderStateStore } from "../../store/store";
 import useAuth from "../../apis/useAuth";
+import { User } from "src/types/auth";
+
+interface ExtendedUser {
+  id: string;
+  name: string;
+  email: string;
+  photoURL?: string;
+}
 
 function Header() {
   const navigate = useNavigate();
@@ -72,7 +80,7 @@ function Header() {
             >
               <img
                 className="h-25 w-25 rounded-full mr-20"
-                src={user?.photoURL}
+                src={(user as User)?.photoURL}
                 alt="signIn"
               />
             </div>
