@@ -13,7 +13,8 @@ import drawForceGraph from "../../utils/d3/drawForceGraph";
 
 function Behavior() {
   const { user } = useUserStore();
-  const { projects, fetchProjects } = useProjects(user?._id);
+  const userId = user?._id;
+  const { projects, fetchProjects } = useProjects(userId);
   const [selectedProject, setSelectedProject] = useState({});
   const [isDropdown, setIsDropdown] = useState(false);
   const [topPagePath, setTopPagePath] = useState("");
@@ -25,10 +26,10 @@ function Behavior() {
   const barChartRef = useRef();
 
   useEffect(() => {
-    if (user?._id) {
+    if (userId) {
       fetchProjects();
     }
-  }, [fetchProjects, user._id]);
+  }, [fetchProjects, userId]);
 
   useEffect(() => {
     if (selectedProject._id) {

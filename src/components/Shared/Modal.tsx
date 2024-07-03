@@ -9,7 +9,7 @@ interface ModalProps {
   width?: string;
 }
 
-function Modal({ isOpen, onClose, children, width = "max-w-lg" }: ModalProps) {
+function Modal({ isOpen, onClose, children, width }: ModalProps) {
   const { headerState } = useHeaderStateStore();
   const isMainPage = headerState === "MainPage";
   const isDashboard = headerState === "Dashboard";
@@ -61,5 +61,9 @@ function Modal({ isOpen, onClose, children, width = "max-w-lg" }: ModalProps) {
     </>
   );
 }
+
+Modal.defaultProps = {
+  width: "max-w-lg",
+};
 
 export default Modal;

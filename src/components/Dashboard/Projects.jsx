@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import { IoTrashOutline } from "react-icons/io5";
 import { FaRegCopy, FaCheck } from "react-icons/fa";
 
@@ -17,8 +16,9 @@ import {
 
 function Projects() {
   const { user } = useUserStore();
+  const userId = user?._id;
   const { projects, errorMessage, fetchProjects, addProject, deleteProject } =
-    useProjects(user?._id);
+    useProjects(userId);
   const {
     projectName,
     projectErrorMessage,
@@ -42,10 +42,10 @@ function Projects() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (user?._id) {
+    if (userId) {
       fetchProjects();
     }
-  }, [fetchProjects, user._id]);
+  }, [fetchProjects, userId]);
 
   function handleOpenModal() {
     setIsModalOpen(true);
