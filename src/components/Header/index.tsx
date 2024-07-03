@@ -5,13 +5,6 @@ import { useHeaderStateStore } from "../../store/store";
 import useAuth from "../../apis/useAuth";
 import { User } from "src/types/auth";
 
-interface ExtendedUser {
-  id: string;
-  name: string;
-  email: string;
-  photoURL?: string;
-}
-
 function Header() {
   const navigate = useNavigate();
   const { headerState } = useHeaderStateStore();
