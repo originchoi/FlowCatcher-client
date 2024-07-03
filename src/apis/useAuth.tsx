@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
-import { signInWithPopup, signOut } from "firebase/auth";
+import { signInWithPopup, signOut, User as FirebaseUser } from "firebase/auth";
 import { auth, provider } from "../config/firebase";
-
 import { useUserStore } from "../store/store";
+import { AuthResponse } from "src/types/auth";
 
 function useAuth() {
   const navigate = useNavigate();
@@ -12,7 +11,7 @@ function useAuth() {
 
   async function checkLogin() {
     try {
-      const response = await axios.get(
+      const response = await axios.get<AuthResponse>(
         `${import.meta.env.VITE_SERVER_URL}/auth/check`,
         {
           withCredentials: true,
@@ -21,7 +20,7 @@ function useAuth() {
 
       if (response.data.result) {
         setIsLoggedIn(true);
-        setUser(response.data.user);
+        setUser(response.data.user || null);
       } else {
         navigate("/");
       }
@@ -34,7 +33,7 @@ function useAuth() {
   async function handleLogin() {
     try {
       const response = await signInWithPopup(auth, provider);
-      const { user: firebaseUser } = response;
+      const firebaseUser: FirebaseUser | null = response.user;
 
       if (firebaseUser) {
         const userData = {
@@ -42,7 +41,7 @@ function useAuth() {
           username: firebaseUser.displayName,
         };
 
-        const loginResponse = await axios.post(
+        const loginResponse = await axios.post<AuthResponse>(
           `${import.meta.env.VITE_SERVER_URL}/auth/signIn`,
           userData,
           {
@@ -51,9 +50,9 @@ function useAuth() {
           },
         );
 
-        if (loginResponse.data.result === "ok") {
+        if (loginResponse.data.result) {
           setIsLoggedIn(true);
-          setUser(loginResponse.data.user);
+          setUser(loginResponse.data.user || null);
           navigate("/dashboard");
         }
       }
