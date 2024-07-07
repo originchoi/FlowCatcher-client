@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import useAuth from "../apis/useAuth";
 
-function useGetStartedClick() {
+function useGetStartedClick(): () => Promise<void> {
   const { isLoggedIn, handleLogin } = useAuth();
   const navigate = useNavigate();
 
-  async function handleStartNowClick() {
+  async function handleStartNowClick(): Promise<void> {
     if (isLoggedIn) {
       navigate("/dashboard");
     } else {
