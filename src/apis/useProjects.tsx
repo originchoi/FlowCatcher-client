@@ -1,13 +1,14 @@
 import { useState, useCallback } from "react";
 import axios from "axios";
+import { Project, UseProjectsResult } from "src/types/projects";
 
-function useProjects(userId) {
-  const [projects, setProjects] = useState([]);
-  const [isLoading, setisLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+function useProjects(userId: string): UseProjectsResult {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const fetchProjects = useCallback(async () => {
-    setisLoading(true);
+    setIsLoading(true);
 
     try {
       const response = await axios.get(
@@ -18,15 +19,19 @@ function useProjects(userId) {
       setProjects(response.data);
       setErrorMessage(null);
     } catch (err) {
-      setErrorMessage(err.message);
+      if (err instanceof Error) {
+        setErrorMessage(err.message);
+      } else {
+        setErrorMessage("An unknown error occurred");
+      }
     } finally {
-      setisLoading(false);
+      setIsLoading(false);
     }
   }, [userId]);
 
   const addProject = useCallback(
-    async (projectName) => {
-      setisLoading(true);
+    async (projectName: string) => {
+      setIsLoading(true);
 
       try {
         const response = await axios.post(
@@ -43,18 +48,22 @@ function useProjects(userId) {
 
         return response.data;
       } catch (err) {
-        setErrorMessage(err.message);
+        if (err instanceof Error) {
+          setErrorMessage(err.message);
+        } else {
+          setErrorMessage("An unknown error occurred");
+        }
         return null;
       } finally {
-        setisLoading(false);
+        setIsLoading(false);
       }
     },
     [userId],
   );
 
   const deleteProject = useCallback(
-    async (projectId) => {
-      setisLoading(true);
+    async (projectId: string) => {
+      setIsLoading(true);
 
       try {
         await axios.delete(
@@ -67,9 +76,13 @@ function useProjects(userId) {
         );
         setErrorMessage(null);
       } catch (err) {
-        setErrorMessage(err.message);
+        if (err instanceof Error) {
+          setErrorMessage(err.message);
+        } else {
+          setErrorMessage("An unknown error occurred");
+        }
       } finally {
-        setisLoading(false);
+        setIsLoading(false);
       }
     },
     [userId],
