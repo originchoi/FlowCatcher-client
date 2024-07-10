@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 
 import axios from "axios";
 
-import Projects from "../../../components/Dashboard/Projects";
+import Projects from "../../../components/Projects";
 import { convertFormatApiKey } from "../../../utils/convertFormUtils";
 
 vi.mock("axios");
@@ -13,12 +13,12 @@ vi.mock("../../../store/store", () => ({
   })),
 }));
 
-vi.mock("../../../components/Shared/Modal", () => ({
+vi.mock("../../../components/Modal", () => ({
   __esModule: true,
   default: ({ children, isOpen }) => (isOpen ? <div>{children}</div> : null),
 }));
 
-vi.mock("../../../components/Shared/DeleteConfirmationModal", () => ({
+vi.mock("../../../components/DeleteConfirmationModal", () => ({
   __esModule: true,
   default: ({ isOpen, onConfirm }) =>
     isOpen ? <button onClick={onConfirm}>Confirm Delete</button> : null,

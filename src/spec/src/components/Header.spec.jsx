@@ -2,10 +2,10 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { signInWithPopup, signOut } from "firebase/auth";
-import Header from "../../../components/Header";
-import { useUserStore, useHeaderStateStore } from "../../../store/store";
+import Header from "../../../components/Header/index.jsx";
+import { useUserStore, useHeaderStateStore } from "../../../store/store.js";
 
-vi.mock("../../../store/store", () => ({
+vi.mock("../../../store/store.js", () => ({
   useUserStore: vi.fn(() => ({
     user: null,
     setUser: vi.fn(),

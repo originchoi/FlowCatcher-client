@@ -2,8 +2,8 @@ import { describe, it, expect } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 
-import ErrorPage from "../../../components/Shared/ErrorPage";
-import MainPage from "../../../components/Home/MainPage";
+import ErrorPage from "../../../components/ErrorPage";
+import MainPage from "../../../components/MainPage";
 
 describe("Error Page", () => {
   it("render Error Page", () => {
@@ -48,6 +48,8 @@ describe("Error Page", () => {
 
     fireEvent.click(screen.getByText("Return to the main page"));
 
-    expect(screen.getByText("Get Started")).toBeInTheDocument();
+    expect(
+      screen.getByText("사용자 행동에 대한 귀중한 데이터를 확보해보세요"),
+    ).toBeInTheDocument();
   });
 });

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 
-import DeleteConfirmationModal from "../../../components/Shared/DeleteConfirmationModal";
+import DeleteConfirmationModal from "../../../components/DeleteConfirmationModal";
 
 describe("DeleteConfirmationModal Component", () => {
   it("does not render when not open", () => {

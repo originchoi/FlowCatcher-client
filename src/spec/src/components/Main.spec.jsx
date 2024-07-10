@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
-import MainPage from "../../../components/Home/MainPage";
+import MainPage from "../../../components/MainPage";
 import { useHeaderStateStore } from "../../../store/store";
 
 vi.mock("../../../components/Header", () => ({
@@ -15,15 +15,11 @@ vi.mock("../../../components/Footer", () => ({
   default: () => <footer>Footer Mock</footer>,
 }));
 
-vi.mock("../../../store/store", async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    ...actual,
-    useHeaderStateStore: vi.fn(() => ({
-      setHeaderState: vi.fn(),
-    })),
-  };
-});
+vi.mock("../../../store/store", () => ({
+  useHeaderStateStore: vi.fn(() => ({
+    setHeaderState: vi.fn(),
+  })),
+}));
 
 describe("MainPage Component", () => {
   const setHeaderState = vi.fn();
@@ -45,10 +41,10 @@ describe("MainPage Component", () => {
     expect(screen.getByText("Header Mock")).toBeInTheDocument();
     expect(screen.getByText("Footer Mock")).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Get Started" }),
+      screen.getByRole("link", { name: "Get Started" }),
     ).toBeInTheDocument();
-    expect(screen.getByText("User Flow Analytics")).toBeInTheDocument();
-    expect(screen.getByText("Conversion Rate Analytics")).toBeInTheDocument();
+    expect(screen.getByText("User Flow Anaysis")).toBeInTheDocument();
+    expect(screen.getByText("Conversion Rate Analysis")).toBeInTheDocument();
   });
 
   it("calls setHeaderState correctly", () => {
