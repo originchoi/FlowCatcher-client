@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { IoTrashOutline } from "react-icons/io5";
 import { FaRegCopy, FaCheck } from "react-icons/fa";
 
+import { User } from "src/types/auth";
+import { Project } from "src/types/projects";
 import { useUserStore } from "../../store/store";
 import useProjects from "../../apis/useProjects";
 import useProjectActions from "../../hooks/useProjectActions";
@@ -13,9 +15,6 @@ import {
   convertDateForm,
   convertFormatApiKey,
 } from "../../utils/convertFormUtils";
-
-import { User } from "src/types/auth";
-import { Project } from "src/types/projects";
 
 function Projects() {
   const { user } = useUserStore();
@@ -55,7 +54,7 @@ function Projects() {
   }
 
   function handleCloseModal() {
-    setResponseData({});
+    setResponseData(null);
     setScriptCode("");
     setIsModalOpen(false);
   }
@@ -112,7 +111,7 @@ function Projects() {
         + Create new project
       </button>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        {!responseData.apiKey && (
+        {!responseData?.apiKey && (
           <form onSubmit={handleSubmitProject} className="space-y-4">
             <label
               htmlFor="projectName"
@@ -143,7 +142,7 @@ function Projects() {
             </button>
           </form>
         )}
-        {responseData.apiKey && (
+        {responseData?.apiKey && (
           <>
             <h1 className="text-center text-lg font-semibold mb-4">
               API Key generated & Service Code

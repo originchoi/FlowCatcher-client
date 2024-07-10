@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { ProjectActionsProps, Project } from "src/types/projects";
 import validateProjectName from "../utils/validateProjectName";
-import { ProjectActionsProps } from "src/types/projects";
 
 function useProjectActions({
   addProject,
@@ -9,7 +9,7 @@ function useProjectActions({
 }: ProjectActionsProps) {
   const [projectName, setProjectName] = useState<string>("");
   const [projectErrorMessage, setProjectErrorMessage] = useState<string>("");
-  const [responseData, setResponseData] = useState<Record<string, any>>({});
+  const [responseData, setResponseData] = useState<Project | null>(null);
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [projectToDelete, setProjectToDelete] = useState<string | null>(null);
@@ -30,7 +30,7 @@ function useProjectActions({
 
       if (projectData) {
         setProjectName("");
-        setResponseData(projectData.project);
+        setResponseData(projectData.project); // projectData.project를 설정합니다.
         setScriptCode(projectData.scriptCode);
         setIsCopied(false);
       }
