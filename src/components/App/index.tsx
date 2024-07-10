@@ -7,7 +7,7 @@ import Conversion from "../Dashboard/Conversion";
 import ErrorPage from "../Shared/ErrorPage";
 import Behavior from "../Dashboard/Behavior";
 
-function App() {
+function App(): JSX.Element {
   return (
     <Routes>
       <Route path="/" element={<MainPage />} />
