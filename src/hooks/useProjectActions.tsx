@@ -1,12 +1,6 @@
 import { useState } from "react";
 import validateProjectName from "../utils/validateProjectName";
-import { UseProjectsResult } from "src/types/projects";
-
-interface ProjectActionsProps {
-  addProject: UseProjectsResult["addProject"];
-  deleteProject: UseProjectsResult["deleteProject"];
-  fetchProjects: UseProjectsResult["fetchProjects"];
-}
+import { ProjectActionsProps } from "src/types/projects";
 
 function useProjectActions({
   addProject,

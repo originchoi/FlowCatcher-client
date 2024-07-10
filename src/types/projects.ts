@@ -15,3 +15,9 @@ export interface UseProjectsResult {
   ) => Promise<{ project: Project; scriptCode: string } | null>;
   deleteProject: (projectId: string) => Promise<void>;
 }
+
+export interface ProjectActionsProps {
+  addProject: UseProjectsResult["addProject"];
+  deleteProject: UseProjectsResult["deleteProject"];
+  fetchProjects: UseProjectsResult["fetchProjects"];
+}
