@@ -2,7 +2,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import MainPage from "../Home/MainPage";
 import Dashboard from "../Dashboard/Dashboard";
-import Overview from "../Dashboard/Overview";
 import Projects from "../Dashboard/Projects";
 import Conversion from "../Dashboard/Conversion";
 import ErrorPage from "../Shared/ErrorPage";
@@ -13,8 +12,7 @@ function App() {
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/dashboard" element={<Dashboard />}>
-        <Route index element={<Navigate replace to="/dashboard/overview" />} />
-        <Route path="/dashboard/overview" element={<Overview />} />
+        <Route index element={<Navigate replace to="/dashboard/Projects" />} />
         <Route path="/dashboard/projects" element={<Projects />} />
         <Route path="/dashboard/analytics/behavior" element={<Behavior />} />
         <Route
