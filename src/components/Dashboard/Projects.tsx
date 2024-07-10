@@ -14,9 +14,12 @@ import {
   convertFormatApiKey,
 } from "../../utils/convertFormUtils";
 
+import { User } from "src/types/auth";
+import { Project } from "src/types/projects";
+
 function Projects() {
   const { user } = useUserStore();
-  const userId = user?._id;
+  const userId = (user as User)?._id || "";
   const { projects, errorMessage, fetchProjects, addProject, deleteProject } =
     useProjects(userId);
   const {
@@ -78,7 +81,7 @@ function Projects() {
             </tr>
           </thead>
           <tbody>
-            {projects.map((project) => (
+            {projects.map((project: Project) => (
               <tr key={project._id} className="hover:bg-gray-100">
                 <td className="px-4 py-2 border text-center">
                   {project.projectName}
