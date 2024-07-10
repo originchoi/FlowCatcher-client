@@ -4,17 +4,17 @@ import { MemoryRouter } from "react-router-dom";
 
 import App from "../../../components/App";
 
-vi.mock("../../../components/MainPage", () => ({
+vi.mock("../../../components/Home/MainPage", () => ({
   __esModule: true,
   default: () => <div>MainPage Mock</div>,
 }));
 
-vi.mock("../../../components/Dashboard", () => ({
+vi.mock("../../../components/Dashboard/Dashboard", () => ({
   __esModule: true,
   default: () => <div>Dashboard Mock</div>,
 }));
 
-vi.mock("../../../components/ErrorPage", () => ({
+vi.mock("../../../components/shared/ErrorPage", () => ({
   __esModule: true,
   default: () => <div>ErrorPage Mock</div>,
 }));

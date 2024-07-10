@@ -30,7 +30,7 @@ function useProjectActions({
 
       if (projectData) {
         setProjectName("");
-        setResponseData(projectData.project); // projectData.project를 설정합니다.
+        setResponseData(projectData.project);
         setScriptCode(projectData.scriptCode);
         setIsCopied(false);
       }

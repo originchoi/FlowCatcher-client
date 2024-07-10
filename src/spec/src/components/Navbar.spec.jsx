@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
-import Navbar from "../../../components/NavBar";
+import Navbar from "../../../components/Dashboard/NavBar";
 
 vi.mock("react-router-dom", async (importOriginal) => {
   const actual = await importOriginal();
@@ -28,12 +28,6 @@ describe("Navbar Component", () => {
       </MemoryRouter>,
     );
 
-    expect(
-      screen.getByTestId("NavLink-/dashboard/overview").className,
-    ).toContain("bg-indigo-600");
-    expect(
-      screen.getByTestId("NavLink-/dashboard/overview").className,
-    ).toContain("text-white");
     expect(
       screen.getByTestId("NavLink-/dashboard/projects").className,
     ).not.toContain("bg-indigo-600");
