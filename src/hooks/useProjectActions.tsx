@@ -1,16 +1,27 @@
 import { useState } from "react";
 import validateProjectName from "../utils/validateProjectName";
+import { UseProjectsResult } from "src/types/projects";
 
-function useProjectActions({ addProject, deleteProject, fetchProjects }) {
-  const [projectName, setProjectName] = useState("");
-  const [projectErrorMessage, setProjectErrorMessage] = useState("");
-  const [responseData, setResponseData] = useState({});
-  const [isCopied, setIsCopied] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [projectToDelete, setProjectToDelete] = useState(null);
-  const [scriptCode, setScriptCode] = useState("");
+interface ProjectActionsProps {
+  addProject: UseProjectsResult["addProject"];
+  deleteProject: UseProjectsResult["deleteProject"];
+  fetchProjects: UseProjectsResult["fetchProjects"];
+}
 
-  async function handleSubmitProject(e) {
+function useProjectActions({
+  addProject,
+  deleteProject,
+  fetchProjects,
+}: ProjectActionsProps) {
+  const [projectName, setProjectName] = useState<string>("");
+  const [projectErrorMessage, setProjectErrorMessage] = useState<string>("");
+  const [responseData, setResponseData] = useState<Record<string, any>>({});
+  const [isCopied, setIsCopied] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [projectToDelete, setProjectToDelete] = useState<string | null>(null);
+  const [scriptCode, setScriptCode] = useState<string>("");
+
+  async function handleSubmitProject(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const invalidProjectName = validateProjectName(projectName);
@@ -23,10 +34,12 @@ function useProjectActions({ addProject, deleteProject, fetchProjects }) {
     try {
       const projectData = await addProject(projectName);
 
-      setProjectName("");
-      setResponseData(projectData.project);
-      setScriptCode(projectData.scriptCode);
-      setIsCopied(false);
+      if (projectData) {
+        setProjectName("");
+        setResponseData(projectData.project);
+        setScriptCode(projectData.scriptCode);
+        setIsCopied(false);
+      }
     } catch (error) {
       setProjectErrorMessage(
         "프로젝트 생성 중 오류가 발생했습니다. 다시 시도해 주세요.",
@@ -50,7 +63,7 @@ function useProjectActions({ addProject, deleteProject, fetchProjects }) {
     }
   }
 
-  function handleDeleteModal(projectId) {
+  function handleDeleteModal(projectId: string) {
     setIsDeleteModalOpen(true);
     setProjectToDelete(projectId);
   }
@@ -68,7 +81,7 @@ function useProjectActions({ addProject, deleteProject, fetchProjects }) {
     }
   }
 
-  function handleProjectNameChange(e) {
+  function handleProjectNameChange(e: React.ChangeEvent<HTMLInputElement>) {
     const newName = e.target.value;
 
     setProjectName(newName);
