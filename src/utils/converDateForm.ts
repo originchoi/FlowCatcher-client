@@ -3,6 +3,10 @@ function convertDateForm(dateString: string): string {
     year: "numeric",
     month: "long",
     day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: false,
   };
   const date = new Date(dateString);
   const koreanTimeZoneDate = new Date(
@@ -12,11 +16,4 @@ function convertDateForm(dateString: string): string {
   return new Intl.DateTimeFormat("ko-KR", options).format(koreanTimeZoneDate);
 }
 
-function convertFormatApiKey(apiKey: string): string {
-  const start = apiKey.slice(0, 6);
-  const end = apiKey.slice(-6);
-
-  return `${start} ... ${end}`;
-}
-
-export { convertDateForm, convertFormatApiKey };
+export default convertDateForm;

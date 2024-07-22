@@ -12,7 +12,7 @@ function App(): JSX.Element {
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/dashboard" element={<Dashboard />}>
-        <Route index element={<Navigate replace to="/dashboard/Projects" />} />
+        <Route index element={<Navigate replace to="/dashboard/projects" />} />
         <Route path="/dashboard/projects" element={<Projects />} />
         <Route path="/dashboard/analytics/behavior" element={<Behavior />} />
         <Route

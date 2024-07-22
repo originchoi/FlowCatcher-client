@@ -4,7 +4,6 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import axios from "axios";
 
 import Projects from "../../../components/Dashboard/Projects";
-import { convertFormatApiKey } from "../../../utils/convertFormUtils";
 
 vi.mock("axios");
 vi.mock("../../../store/store", () => ({
@@ -31,7 +30,7 @@ describe("Projects Component", () => {
         {
           _id: "1",
           projectName: "Project 1",
-          apiKey: "API123456789SECRET",
+
           createdAt: new Date().toISOString(),
         },
       ],
@@ -41,7 +40,6 @@ describe("Projects Component", () => {
         project: {
           _id: "2",
           projectName: "Project 2",
-          apiKey: "API234567890SECRET",
         },
         scriptCode: "ScriptCode",
       },
@@ -53,10 +51,6 @@ describe("Projects Component", () => {
     render(<Projects />);
     await waitFor(() => {
       expect(screen.getByText("Project 1")).toBeInTheDocument();
-
-      const transformedApiKey = convertFormatApiKey("API123456789SECRET");
-
-      expect(screen.getByText(transformedApiKey)).toBeInTheDocument();
     });
   });
 });
