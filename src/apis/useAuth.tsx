@@ -38,7 +38,8 @@ function useAuth() {
       if (firebaseUser) {
         const userData = {
           email: firebaseUser.email,
-          username: firebaseUser.displayName,
+          displayName: firebaseUser.displayName,
+          photoURL: firebaseUser.photoURL,
         };
 
         const loginResponse = await axios.post<AuthResponse>(
