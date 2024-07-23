@@ -38,12 +38,21 @@ export interface BarData {
   isPlaceholder?: boolean;
 }
 
-export interface GraphNode {
+export interface GraphNode extends d3.SimulationNodeDatum {
+  id: string;
+  pageTitle: string;
+  referrer: string;
+  timestamp: string;
+  visitCounts: number;
+  exitCounts: number;
+  visitCount?: number;
   x: number;
   y: number;
 }
 
-export interface GraphLink {
-  source: GraphNode;
-  target: GraphNode;
+export interface GraphLink extends d3.SimulationLinkDatum<GraphNode> {
+  source: GraphNode | string;
+  target: GraphNode | string;
+  isSelfLoop: boolean;
+  count: number;
 }

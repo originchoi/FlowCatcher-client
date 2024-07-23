@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
 
 import { useUserStore } from "../../store/store";
@@ -11,19 +10,27 @@ import checkObjectEmpty from "../../utils/checkObjectEmpty";
 import drawBarGraph from "../../utils/d3/drawBarGraph";
 import drawForceGraph from "../../utils/d3/drawForceGraph";
 
+import { Project } from "../../types/projects";
+import {
+  ProcessedData,
+  GraphNode,
+  GraphLink,
+  BarData,
+} from "../../types/utils";
+
 function Behavior() {
   const { user } = useUserStore();
-  const userId = user?._id;
+  const userId = user?._id || "";
   const { projects, fetchProjects } = useProjects(userId);
-  const [selectedProject, setSelectedProject] = useState({});
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isDropdown, setIsDropdown] = useState(false);
   const [topPagePath, setTopPagePath] = useState("");
   const [sessionCount, setSessionCount] = useState(0);
   const [totalVisitCount, setTotalVisitCount] = useState(0);
   const [totalRefreshCount, setTotalRefreshCount] = useState(0);
   const [totalExitCount, setTotalExitCount] = useState(0);
-  const svgRef = useRef();
-  const barChartRef = useRef();
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const barChartRef = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
     if (userId) {
@@ -32,7 +39,7 @@ function Behavior() {
   }, [fetchProjects, userId]);
 
   useEffect(() => {
-    if (selectedProject._id) {
+    if (selectedProject?._id) {
       sessionStorage.setItem("selectedProjectId", selectedProject._id);
     }
   }, [selectedProject]);
@@ -51,7 +58,12 @@ function Behavior() {
 
   useEffect(() => {
     async function getSessions() {
-      if (checkObjectEmpty(selectedProject)) return;
+      if (
+        !selectedProject ||
+        !selectedProject._id ||
+        checkObjectEmpty(selectedProject)
+      )
+        return;
 
       try {
         const response = await axios.get(
@@ -61,15 +73,39 @@ function Behavior() {
           },
         );
 
-        const pageViewData = processPageViewData(response.data);
+        const pageViewData: ProcessedData = processPageViewData(response.data);
 
-        drawForceGraph(pageViewData, svgRef);
+        const graphNodes: GraphNode[] = pageViewData.nodes.map((node) => ({
+          ...node,
+          x: 0,
+          y: 0,
+        }));
 
-        const sortedData = pageViewData.nodes.sort(
-          (a, b) => b.visitCount - a.visitCount,
+        const graphLinks: GraphLink[] = pageViewData.links.map((link) => ({
+          ...link,
+          source: graphNodes.find(
+            (node) => node.id === link.source,
+          ) as GraphNode,
+          target: graphNodes.find(
+            (node) => node.id === link.target,
+          ) as GraphNode,
+        }));
+
+        const graphData = {
+          nodes: graphNodes,
+          links: graphLinks,
+        };
+
+        drawForceGraph(graphData, svgRef);
+
+        const sortedData = graphData.nodes.sort(
+          (a, b) => b.visitCounts - a.visitCounts,
         );
 
-        const topPageViews = sortedData.slice(0, 5);
+        const topPageViews: BarData[] = sortedData.slice(0, 5).map((node) => ({
+          pageTitle: node.pageTitle,
+          visitCount: node.visitCounts,
+        }));
 
         drawBarGraph(topPageViews, barChartRef);
 
@@ -80,7 +116,7 @@ function Behavior() {
         }
 
         const totalVisits = sortedData.reduce(
-          (acc, node) => acc + node.visitCount,
+          (acc, node) => acc + node.visitCounts,
           0,
         );
         const totalExits = sortedData.reduce(
@@ -88,7 +124,7 @@ function Behavior() {
           0,
         );
 
-        const totalRefreshes = pageViewData.links.reduce((acc, link) => {
+        const totalRefreshes = graphData.links.reduce((acc, link) => {
           return link.isSelfLoop ? acc + link.count : acc;
         }, 0);
 
@@ -115,13 +151,13 @@ function Behavior() {
           <button
             className="px-4 py-2 flex justify-between items-center cursor-pointer font-bold"
             onClick={() => setIsDropdown(!isDropdown)}
-            tabIndex="0"
+            tabIndex={0}
           >
             {isDropdown ? <FiChevronDown /> : <FiChevronRight />}
             {`내 프로젝트 (${projects.length})`}
           </button>
           <div
-            className={`px-4 py-2 flex flex-col max-h-150 overflow-y-auto bg-gray-100 w-full  ${
+            className={`px-4 py-2 flex flex-col max-h-150 overflow-y-auto bg-gray-100 w-full ${
               isDropdown ? "border border-gray-300 rounded-lg" : ""
             }`}
           >
@@ -130,10 +166,12 @@ function Behavior() {
                 <button
                   key={project._id}
                   onClick={() => setSelectedProject(project)}
-                  className={`py-2 px-4 w-full cursor-pointer
-                  ${selectedProject._id === project._id ? "bg-indigo-500 text-white" : "hover:bg-indigo-400 hover:text-white"}
-                  transition duration-500 ease-in-out`}
-                  tabIndex="0"
+                  className={`py-2 px-4 w-full cursor-pointer ${
+                    selectedProject?._id === project._id
+                      ? "bg-indigo-500 text-white"
+                      : "hover:bg-indigo-400 hover:text-white"
+                  } transition duration-500 ease-in-out`}
+                  tabIndex={0}
                 >
                   {project.projectName}
                 </button>
@@ -175,7 +213,7 @@ function Behavior() {
               <div className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
                 Page flow for sessions by path
               </div>
-              {selectedProject._id && totalVisitCount > 0 ? (
+              {selectedProject?._id && totalVisitCount > 0 ? (
                 <div className="mt-4 p-4 bg-white shadow rounded-md">
                   <h2 className="text-lg font-semibold text-gray-800">
                     분석 요약

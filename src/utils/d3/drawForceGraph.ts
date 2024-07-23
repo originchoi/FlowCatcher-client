@@ -2,22 +2,7 @@
 
 import * as d3 from "d3";
 import { linkArc, selfLoopArc } from "./drawArcUtils";
-
-interface GraphNode extends d3.SimulationNodeDatum {
-  x: number;
-  y: number;
-  id: string;
-  pageTitle: string;
-  visitCount: number;
-  exitCounts: number;
-}
-
-interface GraphLink extends d3.SimulationLinkDatum<GraphNode> {
-  source: GraphNode;
-  target: GraphNode;
-  isSelfLoop: boolean;
-  count: number;
-}
+import { GraphNode, GraphLink } from "src/types/utils";
 
 interface ProcessedData {
   nodes: GraphNode[];
