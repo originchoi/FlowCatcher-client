@@ -6,6 +6,7 @@ function processPageViewData(sessions: Session[]): ProcessedData {
   const linkCounts: { [key: string]: number } = {};
   const visitCounts: { [key: string]: number } = {};
   const exitCounts: { [key: string]: number } = {};
+  const refreshCounts: { [key: string]: number } = {};
 
   sessions.forEach((session) => {
     session.pageViews.forEach((pageView, index) => {
@@ -25,6 +26,7 @@ function processPageViewData(sessions: Session[]): ProcessedData {
           timestamp: pageView.timestamp,
           visitCounts: visitCounts[pageView.url],
           exitCounts: 0,
+          refreshCount: 0,
         };
 
         nodes.push(node);
@@ -62,6 +64,20 @@ function processPageViewData(sessions: Session[]): ProcessedData {
 
           if (linkIndex !== -1) {
             links[linkIndex].count = linkCounts[linkKey];
+          }
+        }
+
+        if (source === target) {
+          if (!refreshCounts[source]) {
+            refreshCounts[source] = 1;
+          } else {
+            refreshCounts[source] += 1;
+          }
+
+          const nodeIndex = nodes.findIndex((n) => n.id === source);
+
+          if (nodeIndex !== -1) {
+            nodes[nodeIndex].refreshCount = refreshCounts[source];
           }
         }
       }

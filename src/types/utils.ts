@@ -18,6 +18,7 @@ export interface Node {
   visitCounts: number;
   exitCounts: number;
   visitCount?: number;
+  refreshCount: number;
 }
 
 export interface Link {
@@ -46,6 +47,7 @@ export interface GraphNode extends d3.SimulationNodeDatum {
   visitCounts: number;
   exitCounts: number;
   visitCount?: number;
+  refreshCount: number;
   x: number;
   y: number;
 }

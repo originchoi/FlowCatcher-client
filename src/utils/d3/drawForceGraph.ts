@@ -86,7 +86,7 @@ function drawForceGraph(
         .style("top", event.pageY + 10 + "px")
         .style("display", "inline-block")
         .html(
-          `Source: ${sourceNode.pageTitle}<br><br>Target: ${targetNode.pageTitle}`,
+          `출발페이지: ${sourceNode.pageTitle}<br>도착페이지: ${targetNode.pageTitle}`,
         );
 
       d3.select(this as SVGPathElement)
@@ -120,8 +120,7 @@ function drawForceGraph(
     .data(nodes)
     .enter()
     .append("rect")
-    .attr("width", 300)
-    .attr("height", 80)
+    .attr("height", 135)
     .attr("rx", 15)
     .attr("ry", 15)
     .style("fill", "#dddee1")
@@ -140,8 +139,41 @@ function drawForceGraph(
     .append("text")
     .attr("class", "text")
     .attr("dx", 10)
-    .attr("dy", 20)
-    .text((d) => (d.pageTitle === "/" ? "\u{1F3E0} Home" : d.pageTitle));
+    .attr("dy", 25)
+    .each(function (d) {
+      const textElement = d3.select(this);
+      if (d.pageTitle === "/") {
+        textElement
+          .append("tspan")
+          .attr("style", "font-weight: bold;")
+          .text("\u{1F3E0} Home");
+      } else {
+        textElement
+          .append("tspan")
+          .attr("style", "font-weight: bold;")
+          .text("홈 이하 URL: ");
+        textElement.append("tspan").text(d.pageTitle);
+      }
+    });
+
+  node.attr("width", function (d, i) {
+    const textElement = text.nodes()[i] as SVGTextElement;
+    const textWidth = textElement.getBBox().width;
+
+    return Math.max(300, textWidth + 25);
+  });
+
+  const exitCountText = group
+    .selectAll<SVGTextElement, GraphNode>(".exit-count-text")
+    .data(nodes)
+    .enter()
+    .append("text")
+    .attr("class", "exit-count-text")
+    .text((d) => `페이지 이탈 횟수: ${d.exitCounts}`)
+    .attr("dx", 10)
+    .attr("dy", 70)
+    .attr("fill", "red")
+    .attr("font-size", "18px");
 
   const visitCountText = group
     .selectAll<SVGTextElement, GraphNode>(".visit-count-text")
@@ -150,21 +182,21 @@ function drawForceGraph(
     .append("text")
     .attr("class", "visit-count-text")
     .attr("dx", 10)
-    .attr("dy", 70)
-    .text((d) => `방문 횟수: ${d.visitCount}`)
-    .attr("fill", "black")
+    .attr("dy", 95)
+    .text((d) => `페이지 방문 횟수: ${d.visitCount}`)
+    .attr("fill", "green")
     .attr("font-size", "18px");
 
-  const exitCountText = group
-    .selectAll<SVGTextElement, GraphNode>(".exit-count-text")
+  const refreshCountText = group
+    .selectAll<SVGTextElement, GraphNode>(".refresh-count-text")
     .data(nodes)
     .enter()
     .append("text")
-    .attr("class", "exit-count-text")
-    .text((d) => `이탈 횟수: ${d.exitCounts}`)
+    .attr("class", "refresh-count-text")
     .attr("dx", 10)
-    .attr("dy", 46)
-    .attr("fill", "red")
+    .attr("dy", 120)
+    .text((d) => `페이지 새로고침 횟수: ${d.refreshCount || 0}`)
+    .attr("fill", "blue")
     .attr("font-size", "18px");
 
   svg
@@ -246,6 +278,7 @@ function drawForceGraph(
 
     visitCountText.attr("x", (d) => d.x || 0).attr("y", (d) => d.y || 0);
     exitCountText.attr("x", (d) => d.x || 0).attr("y", (d) => d.y || 0);
+    refreshCountText.attr("x", (d) => d.x || 0).attr("y", (d) => d.y || 0);
   });
 }
 

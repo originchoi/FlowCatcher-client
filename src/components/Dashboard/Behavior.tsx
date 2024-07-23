@@ -184,10 +184,7 @@ function Behavior() {
           <div className="md:flex">
             <div className="p-8">
               <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-                User flow analytics
-              </div>
-              <div className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
-                Path to the most accessed page
+                가장 많이 접속한 페이지 경로
               </div>
               {topPagePath ? (
                 <p className="mt-2 text-gray-500">
@@ -208,10 +205,7 @@ function Behavior() {
           <div className="md:flex md:max-w-6xl">
             <div className="p-8">
               <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-                User flow analytics
-              </div>
-              <div className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
-                Page flow for sessions by path
+                페이지 경로별 세션 흐름
               </div>
               {selectedProject?._id && totalVisitCount > 0 ? (
                 <div className="mt-4 p-4 bg-white shadow rounded-md">
@@ -220,25 +214,31 @@ function Behavior() {
                   </h2>
                   <div className="grid grid-cols-2 gap-4 mt-4">
                     <div className="flex items-center p-4 bg-yellow-100 rounded-md">
-                      <span className="text-yellow-600">총 세션 수:</span>
+                      <span className="text-yellow-600">
+                        총 세션 수(방문자 수):
+                      </span>
                       <span className="ml-auto text-yellow-800 font-bold">
                         {sessionCount}
                       </span>
                     </div>
                     <div className="flex items-center p-4 bg-green-100 rounded-md">
-                      <span className="text-green-600">총 방문 횟수:</span>
+                      <span className="text-green-600">
+                        총 페이지 방문 횟수:
+                      </span>
                       <span className="ml-auto text-green-800 font-bold">
                         {totalVisitCount}
                       </span>
                     </div>
                     <div className="flex items-center p-4 bg-blue-100 rounded-md">
-                      <span className="text-blue-600">총 새로고침 횟수:</span>
+                      <span className="text-blue-600">
+                        총 페이지 새로고침 횟수:
+                      </span>
                       <span className="ml-auto text-blue-800 font-bold">
                         {totalRefreshCount}
                       </span>
                     </div>
                     <div className="flex items-center p-4 bg-red-100 rounded-lg">
-                      <span className="text-red-600">총 이탈 횟수:</span>
+                      <span className="text-red-600">총 페이지 이탈 횟수:</span>
                       <span className="ml-auto text-red-800 font-bold">
                         {totalExitCount}
                       </span>
