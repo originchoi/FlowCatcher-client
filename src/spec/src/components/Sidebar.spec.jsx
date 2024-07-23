@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
-import Navbar from "../../../components/Dashboard/NavBar";
+import Sidebar from "../../../components/Dashboard/Sidebar";
 
 vi.mock("react-router-dom", async (importOriginal) => {
   const actual = await importOriginal();
@@ -20,11 +20,11 @@ vi.mock("react-router-dom", async (importOriginal) => {
   };
 });
 
-describe("Navbar Component", () => {
+describe("Sidebar Component", () => {
   it("renders correctly with active and inactive links", () => {
     render(
       <MemoryRouter initialEntries={["/dashboard/overview"]}>
-        <Navbar />
+        <Sidebar />
       </MemoryRouter>,
     );
 

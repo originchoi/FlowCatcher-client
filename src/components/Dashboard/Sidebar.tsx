@@ -3,7 +3,7 @@ import { GrAnalytics } from "react-icons/gr";
 import { DiGoogleAnalytics } from "react-icons/di";
 import { GoProjectRoadmap } from "react-icons/go";
 
-function Navbar() {
+function Sidebar() {
   return (
     <div className="w-150 bg-gray-200">
       <div className="flex flex-col items-start justify-start">
@@ -48,4 +48,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default Sidebar;
