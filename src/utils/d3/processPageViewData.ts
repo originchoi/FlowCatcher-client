@@ -30,6 +30,8 @@ function processPageViewData(sessions: Session[]): ProcessedData {
         };
 
         nodes.push(node);
+      } else {
+        node.visitCounts = visitCounts[pageView.url];
       }
 
       if (!session.isActive && index === session.pageViews.length - 1) {
