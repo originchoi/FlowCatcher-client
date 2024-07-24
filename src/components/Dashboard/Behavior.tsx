@@ -179,7 +179,7 @@ function Behavior() {
           </div>
         </div>
       </div>
-      <div>
+      <div className="ml-10">
         <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-6xl">
           <div className="md:flex">
             <div className="p-8">
