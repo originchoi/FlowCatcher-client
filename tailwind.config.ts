@@ -34,10 +34,20 @@ export default {
             opacity: "0",
           },
         },
+        dropdownOpen: {
+          "0%": { opacity: "0", transform: "translateY(-10px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        dropdownClose: {
+          "0%": { opacity: "1", transform: "translateY(0)" },
+          "100%": { opacity: "0", transform: "translateY(-10px)" },
+        },
       },
       animation: {
         floatUp: "floatUp 3s ease-out forwards",
         sdb: "sdb 3s infinite",
+        dropdownOpen: "dropdownOpen 0.3s ease-out forwards",
+        dropdownClose: "dropdownClose 0.3s ease-in forwards",
       },
     },
   },

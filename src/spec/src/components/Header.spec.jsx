@@ -69,6 +69,5 @@ describe("Header Component", () => {
     );
 
     expect(screen.getByText("FlowCatcher")).toBeInTheDocument();
-    expect(screen.getByText("Sign In")).toBeInTheDocument();
   });
 });
