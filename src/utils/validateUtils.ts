@@ -12,4 +12,9 @@ function validateProjectName(name: string): string {
   return "";
 }
 
-export default validateProjectName;
+function isValidPagePath(path: string): boolean {
+  const pathRegex = /^\/[a-zA-Z0-9\-_\/]*$/;
+  return pathRegex.test(path);
+}
+
+export { validateProjectName, isValidPagePath };

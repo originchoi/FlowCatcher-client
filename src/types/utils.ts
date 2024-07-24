@@ -58,3 +58,9 @@ export interface GraphLink extends d3.SimulationLinkDatum<GraphNode> {
   isSelfLoop: boolean;
   count: number;
 }
+
+export interface ConversionData {
+  totalSessions: number;
+  conversionCount: number;
+  conversionRate: number;
+}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ProjectActionsProps, Project } from "src/types/projects";
-import validateProjectName from "../utils/validateProjectName";
+import { validateProjectName } from "../utils/validateUtils";
 
 function useProjectActions({
   addProject,
