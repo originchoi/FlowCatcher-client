@@ -15,8 +15,8 @@ interface CardSectionProps {
 function CardSection({ handleCardClick }: CardSectionProps) {
   const cards: CardProps[] = [
     {
-      title: "User Flow Analytics",
-      description: "Track User Interactions 🚀",
+      title: "행동 흐름 분석",
+      description: "접속한 유저들의 페이지 이동을 시각화 🚀",
       image: "/assets/user_flow.png",
       gifs: [
         "/assets/servicecode_issued.gif",
@@ -25,11 +25,12 @@ function CardSection({ handleCardClick }: CardSectionProps) {
       ],
     },
     {
-      title: "Conversion Rate Analytics",
-      description: "Optimize User Flow 🔍",
+      title: "전환율 분석",
+      description: "설정한 페이지까지 유저 도달을 분석 🔍",
       image: "/assets/conversion_analytics.png",
       gifs: [],
-      customMessage: "해당 기능 업데이트 중입니다. 🙇🏻‍♂️",
+      customMessage:
+        "해당 기능 업데이트 중입니다. 간단한 전환율 계산은 사용 가능합니다! 🙇🏻‍♂️",
     },
   ];
 

@@ -10,7 +10,7 @@ function ModalContent({ selectedCard }: ModalContentProps) {
   return (
     <div className="flex flex-col items-center">
       <h3 className="text-xl sm:text-2xl font-bold mt-10 mb-30">
-        How to use {selectedCard.title}
+        {selectedCard.title} 사용 방법
       </h3>
       {selectedCard.gifs.length > 0 && (
         <>
@@ -25,9 +25,9 @@ function ModalContent({ selectedCard }: ModalContentProps) {
               className="w-full h-auto rounded-lg"
             />
           </div>
-          <ul className="list-disc ml-25 mt-10 mb-40 text-left text-gray-600">
+          <ul className="list-disc ml-15 mt-10 mb-40 text-left text-gray-600">
             <li>
-              본인의 웹사이트에 사용할 서비스 코드를 발급받기 위해 사용자는
+              본인의 웹사이트에 사용할 추적 코드를 발급받기 위해 사용자는
               프로젝트를 만들 수 있습니다.
             </li>
             <li>
@@ -46,9 +46,9 @@ function ModalContent({ selectedCard }: ModalContentProps) {
               className="w-full h-auto rounded-lg"
             />
           </div>
-          <ul className="list-disc ml-25 mt-10 mb-40 text-left text-gray-600">
+          <ul className="list-disc ml-15 mt-10 mb-40 text-left text-gray-600">
             <li>
-              발급받은 서비스 코드(스크립트 코드)를 사용자의 비즈니스 웹사이트에
+              발급받은 추적 코드(스크립트 코드)를 사용자의 비즈니스 웹사이트에
               붙여넣기 하여 사용합니다.
             </li>
           </ul>
